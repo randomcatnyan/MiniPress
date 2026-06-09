@@ -1,11 +1,14 @@
 {
     "require": {
         "slim/slim": "4.*",
-        "slim/psr7": "^1.8"
+        "slim/psr7": "^1.8",
+        "illuminate/database": "^11.0",
+        "slim/twig-view": "^3.4",
+        "slim/csrf": "^1.5"
     },
     "autoload": {
         "psr-4": {
-            "MiniPress\\Core\\": "./core/src/"
+            "minipress\\core\\": "src/"
         }
     }
 }
