@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Eloquent
 {
-    public static function init($filename): void
+    public static function init(string $filename): void
     {
         $db = new DB();
         // parse_ini_file renvoie directement le tableau des paramètres attendus par Eloquent
