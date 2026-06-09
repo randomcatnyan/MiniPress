@@ -1,1 +1,1 @@
-# MiniPress.core
+# MiniPress
