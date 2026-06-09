@@ -1,60 +1,31 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  db:
-    image: mariadb:10.11
+  sql:
+    image: mariadb:latest
     container_name: minipress_db
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: minipress
-      MYSQL_USER: minipress
-      MYSQL_PASSWORD: minipress
+    env_file:
+      - .database_env
     volumes:
-      - db_data:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - minipress_net
-
-  api:
-    build: ./api
-    container_name: minipress_api
-    restart: unless-stopped
+      - mdb:/var/lib/mysql
     ports:
-      - "3000:3000"
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_NAME: minipress
-      DB_USER: minipress
-      DB_PASSWORD: minipress
-      PORT: 3000
-    depends_on:
-      - db
+      - "3306:3306"
     networks:
-      - minipress_net
+      minipress.net:
+        aliases:
+          - sql.db
 
-  admin:
-    build: ./admin
-    container_name: minipress_admin
-    restart: unless-stopped
+  adminer:
+    image: adminer
+    container_name: minipress
     ports:
-      - "4000:4000"
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_NAME: minipress
-      DB_USER: minipress
-      DB_PASSWORD: minipress
-      SESSION_SECRET: change_me_in_production
-      PORT: 4000
-    depends_on:
-      - db
+      - "8081:8080"
     networks:
-      - minipress_net
-
-volumes:
-  db_data:
+      - minipress.net
 
 networks:
-  minipress_net:
+  minipress.net:
+    driver: bridge
+
+volumes:
+  mdb:

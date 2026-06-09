@@ -1,0 +1,5 @@
+driver=mysql
+host=sql.db
+database=minipress
+username=minipress
+password=root
