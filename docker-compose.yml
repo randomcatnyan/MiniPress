@@ -15,7 +15,6 @@ services:
 
   adminer:
     image: adminer
-    container_name: minipress
     ports:
       - "8081:8080"
     networks:
