@@ -8,7 +8,7 @@ use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 use Slim\Factory\AppFactory;
 
-Eloquent::init(__DIR__ . '/../database.ini');
+Eloquent::init(__DIR__ . '/../.database.env');
 $app = AppFactory::create();
 $twig = Twig::create(__DIR__ . '/../webui/views', [
     'cache' => false,

@@ -15,18 +15,18 @@ class AuthnService implements AuthnInterface
             throw new \InvalidArgumentException("Un utilisateur avec cet email existe déjà.");
         }
 
-            $user = new Utilisateur();
-
             $email = filter_var($email, FILTER_VALIDATE_EMAIL);
             if (!$email) {
                 throw new \InvalidArgumentException("Email invalide.");
             }
+            
+            $user = new Utilisateur();
 
             $mdp = password_hash($password, PASSWORD_BCRYPT);
 
-            $user->user_id = $email;
-            $user->password = $mdp;
-            $user->role = Utilisateur::ROLE_USER;
+            $user->email = $email;
+            $user->mdp = $mdp;
+            $$user->role = Utilisateur::ROLE_USER;
 
             $user->save();   
 

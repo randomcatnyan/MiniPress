@@ -8,7 +8,7 @@ use minipress\core\application_core\domain\Exception\CategorieException;
 use Illuminate\Database\QueryException;
 use InvalidArgumentException;
 
-class CategorieService implements GestionCategorieInterface
+class CategorieService implements CategorieInterface
 {
     public function creerCategorie(array $data): int
     {
