@@ -1,28 +1,20 @@
 services:
   sql:
     image: mariadb:latest
-    container_name: minipress_db
-    env_file:
-      - .database_env
+    env_file: .database_env
     volumes:
       - mdb:/var/lib/mysql
     ports:
       - "3306:3306"
-    networks:
-      minipress.net:
-        aliases:
-          - sql.db
 
   php:
     image: php:8.2-apache
-    container_name: minipress_php
     volumes:
       - ./core:/var/www/html
     ports:
       - "8083:80"
     depends_on:
       - sql
-    working_dir: /var/www/html
     command: >
       bash -c "
         apt-get update && apt-get install -y libzip-dev unzip &&
@@ -39,19 +31,11 @@ services:
         fi &&
         apache2-foreground
       "
-    networks:
-      - minipress.net
 
   adminer:
     image: adminer
     ports:
       - "8082:8080"
-    networks:
-      - minipress.net
-
-networks:
-  minipress.net:
-    driver: bridge
 
 volumes:
-  mdb:
+  mdb:
