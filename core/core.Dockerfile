@@ -1,0 +1,25 @@
+# c'est un dockerfile basé sur celui utilisé pour giftbox
+# qui est à la base basé sur un qu'a été donné par le prof au début du projet giftbox
+
+# Use an official PHP runtime as a base image
+FROM php:8.5
+
+# basic update
+RUN apt-get update && \
+    apt-get install --yes --force-yes \
+    cron openssl
+
+# installing the docker php extensions installer
+RUN curl -sSLf \
+    -o /usr/local/bin/install-php-extensions \
+    https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions
+
+# PHP Configuration
+RUN install-php-extensions  gettext iconv intl  tidy zip sockets
+RUN install-php-extensions  pgsql mysqli
+RUN install-php-extensions  pdo_mysql pdo_pgsql
+RUN install-php-extensions  xdebug
+RUN install-php-extensions  redis
+RUN install-php-extensions @composer
+EXPOSE 80
