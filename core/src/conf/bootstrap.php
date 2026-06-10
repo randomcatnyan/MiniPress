@@ -19,6 +19,7 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
 
+
 $app = (require_once __DIR__ . '/routes.php')($app);
 
 return $app;

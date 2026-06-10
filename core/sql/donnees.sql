@@ -1,14 +1,15 @@
 USE minipress;
 
 INSERT INTO utilisateurs (nom, email, mdp) VALUES
-('Alice Dupont',    'alice.dupont@email.com',    '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ01'),
-('Bob Martin',      'bob.martin@email.com',      '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ02'),
-('Claire Moreau',   'claire.moreau@email.com',   '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ03'),
-('David Bernard',   'david.bernard@email.com',   '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ04'),
-('Emma Leroy',      'emma.leroy@email.com',      '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ05'),
-('François Petit',  'francois.petit@email.com',  '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ06'),
-('Gaëlle Roux',     'gaelle.roux@email.com',     '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ07'),
-('Hugo Fournier',   'hugo.fournier@email.com',   '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ08');
+('Alice Dupont',    'alice.dupont@email.com',    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('Bob Martin',      'bob.martin@email.com',      '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('Claire Moreau',   'claire.moreau@email.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('David Bernard',   'david.bernard@email.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('Emma Leroy',      'emma.leroy@email.com',      '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('François Petit',  'francois.petit@email.com',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('Gaëlle Roux',     'gaelle.roux@email.com',     '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('Hugo Fournier',   'hugo.fournier@email.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+
 
 INSERT INTO categories (titre, description) VALUES
 ('Technologie',    'Actualités et tendances du monde de la tech, intelligence artificielle, gadgets et innovations.'),
