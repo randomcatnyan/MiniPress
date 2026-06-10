@@ -39,6 +39,8 @@ services:
       - "./core:/app"
     depends_on:
       - sql
+    networks:
+      - minipress.net
     working_dir: /app
     command: 'sh -c "composer install && php -S 0.0.0.0:80 -t /app/public"'
 

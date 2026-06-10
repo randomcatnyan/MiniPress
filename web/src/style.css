@@ -1,0 +1,18 @@
+:root {
+    --color1: black;
+    --color2: snow;
+    --color3: cyan;
+}
+
+body {
+    background-color: var(--color1);
+    color: var(--color2);
+    height: 100vh;
+    margin: 0px;
+    display: grid;
+    place-items: center;
+
+    & a {
+        color: var(--color3);
+    }
+}

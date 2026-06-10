@@ -3,6 +3,7 @@ create table utilisateurs (
     nom varchar(100) not null,
     email varchar(150) not null unique,
     mdp varchar(255) not null,
+    role varchar(20) not null default 'user',
     cree timestamp default current_timestamp,
     maj timestamp default current_timestamp on update current_timestamp
 ) engine=innodb;
@@ -21,6 +22,7 @@ create table articles (
     resume text,
     contenu text not null,
     image_url varchar(2048),
+    est_publie boolean default false,
     date_publication timestamp default current_timestamp,
     categorie_id int,
     auteur_id int,

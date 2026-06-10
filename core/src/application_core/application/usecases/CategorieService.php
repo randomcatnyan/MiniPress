@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace minipress\core\application_core\application\usecases;
@@ -22,7 +23,7 @@ class CategorieService implements CategorieInterface
             $categorie->save();
             return $categorie->id;
         } catch (QueryException $e) {
-            throw new CategorieException("erreur pas possible d eregistrer la categorire");
+            throw new CategorieException("Erreur SQL Brute : " . $e->getMessage());
         }
     }
 
@@ -35,3 +36,4 @@ class CategorieService implements CategorieInterface
         }
     }
 }
+
