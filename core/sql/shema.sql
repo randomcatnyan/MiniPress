@@ -1,8 +1,3 @@
--- création de la base de données
-create database if not exists minipress char set utf8mb4 collate utf8mb4_unicode_ci;
-use minipress;
-
-
 create table utilisateurs (
     id int auto_increment primary key,
     nom varchar(100) not null,
