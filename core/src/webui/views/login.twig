@@ -1,1 +1,23 @@
-lucas fais ici la page de connexion et d'inscription
+{% extends "index.twig" %}
+
+{% block content %}
+    <h1>Connexion</h1>
+
+    {% if errors is defined and errors is not empty %}
+        {% for error in errors %}
+            <p><strong>{{ error }}</strong></p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" action="/login" id="login-form">
+        <p>
+            <label for="email">Adresse email :</label><br>
+            <input type="email" id="email" name="email" placeholder="exemple@email.com" value="{{ email ?? '' }}" required autocomplete="email" autofocus>
+        </p>
+        <p>
+            <label for="mdp">Mot de passe :</label><br>
+            <input type="password" id="mdp" name="mdp" placeholder="••••••••" required autocomplete="current-password">
+        </p>
+        <button type="submit" id="btn-login">Se connecter</button>
+    </form>
+{% endblock %}
