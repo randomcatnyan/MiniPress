@@ -11,23 +11,20 @@ class AuthnService implements AuthnInterface
     {
         try{
 
-        if (Utilisateur::where('user_id', $email)->exists()) {
-            throw new \InvalidArgumentException("Un utilisateur avec cet email existe déjà.");
-        }
-
             $email = filter_var($email, FILTER_VALIDATE_EMAIL);
             if (!$email) {
                 throw new \InvalidArgumentException("Email invalide.");
             }
             
+            if (Utilisateur::where('email', $email)->exists()) {
+                throw new \InvalidArgumentException("Un utilisateur avec cet email existe déjà.");
+            }
+            
             $user = new Utilisateur();
-
             $mdp = password_hash($password, PASSWORD_BCRYPT);
-
             $user->email = $email;
             $user->mdp = $mdp;
             $user->role = Utilisateur::ROLE_USER;
-
             $user->save();   
 
         }catch(\Exception $e){
@@ -39,10 +36,6 @@ class AuthnService implements AuthnInterface
     {
         try {
             $user = Utilisateur::where('email', $email)->firstOrFail();
-
-            if (!$user) {
-                throw new \InvalidArgumentException("Email ou mot de passe incorrect.");
-            }
 
             if (!password_verify($password, $user->mdp)) {
                 throw new \InvalidArgumentException("Email ou mot de passe incorrect.");

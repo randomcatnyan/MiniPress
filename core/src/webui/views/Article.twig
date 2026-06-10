@@ -5,7 +5,7 @@
     
     <ul>
         {% for c in articles %}
-            <li><p>{{ c.titre }}, {{ c.cree }}</p></li>
+            <li><p>{{ c.titre }}, {{ c.cree }} par {{ c.auteur.nom }}</p></li>
         {% endfor %}
     </ul>
 {% endblock %}

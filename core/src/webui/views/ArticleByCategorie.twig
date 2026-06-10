@@ -5,7 +5,7 @@
 
     <ul>
         {% for a in articles %}
-            <li>{{ a.titre }} — {{ a.cree }}</li>
+            <li>{{ a.titre }} — {{ a.cree }} par {{ a.auteur.nom }}</li>
         {% else %}
             <li>Aucun article dans cette catégorie.</li>
         {% endfor %}

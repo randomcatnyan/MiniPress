@@ -16,7 +16,7 @@ class AuthProvider implements AuthProviderInterface
     public function signin(string $email, string $password): void
     {
         $user = $this->authnService->byCredentials($email, $password);
-        $_SESSION['user'] = ['id' => $user->id, 'email' => $user->user_id, 'role' => $user->role];
+        $_SESSION['user'] = ['id' => $user->id, 'email' => $user->email, 'role' => $user->role];
     }
 
     public function getSignedInUser(): ?array
