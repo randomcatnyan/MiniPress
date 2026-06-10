@@ -1,0 +1,21 @@
+{% extends "index.twig" %}
+
+{% block content %}
+    <h1>cree ta categorie</h1>
+    {% if message %}
+        <p><strong>{{ message }}</strong></p>
+    {% endif %}
+<form action="{{ url_for('cate_cree_post') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf }}">
+        <p>
+            <label for="titre">Titre de la catégorie :</label><br>
+            <input type="text" id="titre" name="titre" required>
+        </p>
+        <p>
+            <label for="description">Description :</label><br>
+            <textarea id="description" name="description"></textarea>
+        </p>
+        <button type="submit">Valide</button>
+        
+    </form>
+{% endblock %}

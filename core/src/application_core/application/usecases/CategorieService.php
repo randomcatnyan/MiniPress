@@ -1,20 +1,28 @@
 <?php
-
 declare(strict_types=1);
 
-namespace minipress\core\application_core\application;
+namespace minipress\core\application_core\application\usecases;
 
-use minipress\core\application_core\domain\Categorie;
+use minipress\core\application_core\domain\entities\Categorie;
+use minipress\core\application_core\domain\Exception\CategorieException;
+use Illuminate\Database\QueryException;
+use InvalidArgumentException;
 
-class CategorieService
+class CategorieService implements GestionCategorieInterface
 {
-    public function creerCategorie(string $titre, string $description): Categorie
+    public function creerCategorie(array $data): int
     {
-        $categorie = new Categorie();
-        $categorie->titre = $titre;
-        $categorie->description = $description;
-        $categorie->save();
-
-        return $categorie;
+        if (empty($data['titre'])) {
+            throw new InvalidArgumentException("titre obligatoire");
+        }
+        try {
+            $categorie = new Categorie();
+            $categorie->titre = $data['titre'];
+            $categorie->description = $data['description'] ?? null;
+            $categorie->save();
+            return $categorie->id;
+        } catch (QueryException $e) {
+            throw new CategorieException("erreur pas possible d eregistrer la categorire");
+        }
     }
 }
