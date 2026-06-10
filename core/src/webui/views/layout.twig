@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MiniPress - Plateforme d'articles et de publications">
+    <title>{% block title %}MiniPress{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #333; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: #fff; border-bottom: 1px solid #ddd; }
+        .navbar-brand { text-decoration: none; font-weight: 700; font-size: 1.2rem; color: #333; }
+        .navbar-brand span { color: #5b4fcf; }
+        .navbar-links { display: flex; gap: 1rem; align-items: center; }
+        .navbar-links a { text-decoration: none; color: #555; font-size: 0.9rem; }
+        .navbar-links a:hover { color: #5b4fcf; }
+    </style>
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">Mini<span>Press</span></a>
+        <div class="navbar-links">
+            {% if session.user %}
+                <span style="color: var(--text-secondary); font-size: 0.875rem;">{{ session.user.nom }}</span>
+                <a href="/logout">Déconnexion</a>
+            {% else %}
+                <a href="/login">Connexion</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

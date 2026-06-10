@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use minipress\core\utils\Eloquent;
+use minipress\core\middleware\SessionMiddleware;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 use Slim\Factory\AppFactory;
@@ -15,9 +16,11 @@ $twig = Twig::create(__DIR__ . '/../webui/views', [
     'auto_reload' => true
 ]);
 
+$app->add(new SessionMiddleware());
 $app->add(TwigMiddleware::create($app, $twig));
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
+
 
 $app = (require_once __DIR__ . '/routes.php')($app);
 

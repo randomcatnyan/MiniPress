@@ -13,6 +13,35 @@ services:
         aliases:
           - sql.db
 
+  php:
+    image: php:8.2-apache
+    container_name: minipress_php
+    volumes:
+      - ./core:/var/www/html
+    ports:
+      - "8083:80"
+    depends_on:
+      - sql
+    working_dir: /var/www/html
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y libzip-dev unzip &&
+        docker-php-ext-install pdo pdo_mysql &&
+        a2enmod rewrite &&
+        sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf &&
+        echo '<Directory /var/www/html/public>
+          AllowOverride All
+          Require all granted
+        </Directory>' >> /etc/apache2/apache2.conf &&
+        if [ ! -d /var/www/html/src/vendor ]; then
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+          cd /var/www/html && composer install;
+        fi &&
+        apache2-foreground
+      "
+    networks:
+      - minipress.net
+
   adminer:
     image: adminer
     ports:
@@ -25,4 +54,4 @@ networks:
     driver: bridge
 
 volumes:
-  mdb:
+  mdb:

@@ -1,0 +1,42 @@
+{% extends "layout.twig" %}
+
+{% block title %}Connexion — MiniPress
+{% endblock %}
+{% block styles %}{% endblock %}
+
+
+{% block content %}
+	<section class="login-page">
+		<div class="login-card">
+			<div class="login-header">
+				<div class="login-icon"></div>
+				<h1>Connexion</h1>
+				<p>Connectez-vous pour gérer vos articles</p>
+			</div>
+
+			{% if errors is defined and errors is not empty %}
+				<div class="alert-error" id="login-errors">
+					{% for error in errors %}
+						<p>{{ error }}</p>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			<form method="POST" action="/login" id="login-form">
+				<div class="form-group">
+					<label for="email" class="form-label">Adresse email</label>
+					<input type="email" id="email" name="email" class="form-input" placeholder="exemple@email.com" value="{{ email ?? '' }}" required autocomplete="email" autofocus>
+				</div>
+
+				<div class="form-group">
+					<label for="mdp" class="form-label">Mot de passe</label>
+					<input type="password" id="mdp" name="mdp" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+				</div>
+
+				<button type="submit" class="btn-login" id="btn-login">
+					Se connecter
+				</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}
