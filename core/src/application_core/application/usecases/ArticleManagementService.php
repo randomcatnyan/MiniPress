@@ -5,6 +5,7 @@ namespace minipress\core\application_core\application\usecases;
 use minipress\core\application_core\domain\entities\Article;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use minipress\core\application_core\domain\Exception\ArticleException;
 
 class ArticleManagementService implements ArticleManagementInterface
 {

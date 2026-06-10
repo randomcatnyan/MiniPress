@@ -1,0 +1,31 @@
+{% extends "index.twig" %}
+
+{% block content %}
+    <h1>Créer un article</h1>
+
+    <form action="{{ url_for('create_article_post') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf }}">
+        <p>
+            <label for="titre">Titre de l'article :</label><br>
+            <input type="text" id="titre" name="titre" required>
+        </p>
+        <p>
+            <label for="categorie_id">Catégorie :</label><br>
+            <select id="categorie_id" name="categorie_id">
+                <option value="">— aucune —</option>
+                {% for c in categories %}
+                    <option value="{{ c.id }}">{{ c.titre }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="resume">Résumé :</label><br>
+            <textarea id="resume" name="resume" rows="3"></textarea>
+        </p>
+        <p>
+            <label for="contenu">Contenu :</label><br>
+            <textarea id="contenu" name="contenu" rows="10" required></textarea>
+        </p>
+        <button type="submit">Valider</button>
+    </form>
+{% endblock %}

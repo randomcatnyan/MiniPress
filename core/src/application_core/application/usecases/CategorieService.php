@@ -25,4 +25,13 @@ class CategorieService implements CategorieInterface
             throw new CategorieException("erreur pas possible d eregistrer la categorire");
         }
     }
+
+    public function getCategorie(): array
+    {
+        try {
+            return Categorie::all()->toArray();
+        } catch (QueryException $e) {
+            throw new CategorieException("Erreur lors de la récupération des catégories." . $e->getMessage());
+        }
+    }
 }

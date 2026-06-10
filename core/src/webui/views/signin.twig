@@ -1,0 +1,23 @@
+{% extends "index.twig" %}
+
+{% block content %}
+    <h2>Se connecter</h2>
+
+    <form action="{{ url_for('signin_post') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf }}">
+
+        <div>
+            <label for="email">Email :</label><br>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <br>
+
+        <div>
+            <label for="password">Mot de passe :</label><br>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <br>
+
+        <button type="submit">Se connecter</button>
+    </form>
+{% endblock %}
