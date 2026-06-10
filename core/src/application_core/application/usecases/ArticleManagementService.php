@@ -1,14 +1,50 @@
 <?php
 
-namespace gift\appli\application_core\application\usecases;
+namespace minipress\core\application_core\application\usecases;
 
-use gift\appli\application_core\domain\entities\Article;
-use Exception;
+use minipress\core\application_core\domain\entities\Article;
+use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ArticleService implements ArticleInterface
+class ArticleManagementService implements ArticleManagementInterface
 {
-    
+    public function creerArticle(array $data): string
+    {
 
-    
-    
+        if (empty($data['titre']) || empty($data['contenu'])) {
+            throw new \InvalidArgumentException('Le titre et le contenu sont requis.');
+        }
+
+        $article = new Article();
+        $article->titre = $data['titre'];
+        $article->resume = $data['resume'] ?? null;
+        $article->contenu = $data['contenu'];
+        $article->categorie_id = $data['categorie_id'] ?? null;
+        $article->auteur_id = $data['auteur_id'];
+        $article->publie = 0;
+
+        $article->save();
+
+        return (string) $article->id;
+    }
+
+    public function getArticle(): array
+    {
+        try {
+            return Article::orderBy('date_publication', 'desc')->get()->toArray();
+        } catch (QueryException $e) {
+            throw new ArticleException("Erreur lors de la récupération des articles.");
+        }
+    }
+
+    public function getArticleByCategorie(int $categorieId): array
+    {
+        try {
+            return Article::where('categorie_id', $categorieId)->orderBy('date_publication', 'desc')->get()->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new ArticleException("L'article avec l'ID $categorieId est introuvable.", 404);
+        } catch (QueryException $e) {
+            throw new ArticleException("Erreur de base de données.");
+        }
+    }
 }

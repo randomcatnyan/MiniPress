@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace minipress\core\application_core\application;
 
-use minipress\core\application_core\domain\Categorie;
+use minipress\core\application_core\domain\entities\Categorie;
 
 class CategorieService
 {

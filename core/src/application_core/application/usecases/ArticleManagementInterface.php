@@ -1,9 +1,10 @@
 <?php
+namespace minipress\core\application_core\application\usecases;
 
-namespace gift\appli\application_core\application\usecases;
-
-interface ArticleInterface
+interface ArticleManagementInterface
 {
-    
+    public function creerArticle(array $data): string;
+    public function getArticle(): array;
+    public function getArticleByCategorie(int $categorieId): array;
 
 }
