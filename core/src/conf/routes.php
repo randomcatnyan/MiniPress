@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 use minipress\core\webui\actions\GetCreateCategorieAction;
 use minipress\core\webui\actions\PostCreateCategorieAction;
+use minipress\core\actions\ShowLoginFormAction;
+use minipress\core\actions\AuthenticateAction;
+use minipress\core\actions\LogoutAction;
 use Slim\App;
-use minipress\core\actions\LoginAction;
 
 
 return function (App $app): App {
-    $login = new LoginAction();
-
-
     $app->get('categories/create', GetCreateCategorieAction::class)->setName('cate_cree_get');
     $app->post('categories/create', PostCreateCategorieAction::class)->setName('cate_cree_post');
-    $app->get('/login', [$login, 'showForm'])->setName('login');
-    $app->post('/login', [$login, 'authenticate'])->setName('login.post');
-    $app->get('/logout', [$login, 'logout'])->setName('logout');
+    $app->get('/login', ShowLoginFormAction::class)->setName('login');
+    $app->post('/login', AuthenticateAction::class)->setName('login.post');
+    $app->get('/logout', LogoutAction::class)->setName('logout');
 
     return $app;
 };
+
 
