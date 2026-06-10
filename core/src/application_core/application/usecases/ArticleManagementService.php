@@ -22,7 +22,7 @@ class ArticleManagementService implements ArticleManagementInterface
         $article->contenu = $data['contenu'];
         $article->categorie_id = $data['categorie_id'] ?? null;
         $article->auteur_id = $data['auteur_id'];
-        $article->publie = 0;
+        $article->est_publie = 0;
 
         $article->save();
 
@@ -32,7 +32,7 @@ class ArticleManagementService implements ArticleManagementInterface
     public function getArticle(): array
     {
         try {
-            return Article::orderBy('date_publication', 'desc')->get()->toArray();
+            return Article::orderBy('cree', 'desc')->get()->toArray();
         } catch (QueryException $e) {
             throw new ArticleException("Erreur lors de la récupération des articles.");
         }
@@ -41,7 +41,7 @@ class ArticleManagementService implements ArticleManagementInterface
     public function getArticleByCategorie(int $categorieId): array
     {
         try {
-            return Article::where('categorie_id', $categorieId)->orderBy('date_publication', 'desc')->get()->toArray();
+            return Article::where('categorie_id', $categorieId)->orderBy('cree', 'desc')->get()->toArray();
         } catch (ModelNotFoundException $e) {
             throw new ArticleException("L'article avec l'ID $categorieId est introuvable.", 404);
         } catch (QueryException $e) {

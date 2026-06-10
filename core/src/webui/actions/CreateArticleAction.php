@@ -35,15 +35,15 @@ class CreateArticleAction extends AbstractAction
         if (!$user) {
             throw new HttpForbiddenException($rq, "Vous devez être connecté pour créer un article.");
         }
-        $userId = $user['id'];
+        $userId = $this->authProvider->getSignedInUser()['id'] ?? null;
 
         $titre = filter_var($data['titre']   ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
-        $resume = filter_var($data['resume']  ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
-        $contenu = filter_var($data['contenu'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
+        $resume = $data['resume']  ?? '';
+        $contenu = $data['contenu'] ?? '';
         $categorieId = $data['categorie_id'] ?: null;
 
         try {
-            $articleId = $this->articleManagementService->creerArticle([
+            $this->articleManagementService->creerArticle([
                 'titre' => $titre,
                 'resume' => $resume,
                 'contenu' => $contenu,

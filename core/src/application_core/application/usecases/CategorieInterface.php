@@ -5,4 +5,5 @@ interface CategorieInterface
 {
     public function creerCategorie(array $data): int;
     public function getCategorie(): array;
+    public function getCategorieById(int $id): array;
 }

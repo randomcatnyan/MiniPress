@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 use minipress\core\webui\actions\GetCreateCategorieAction;
 use minipress\core\webui\actions\PostCreateCategorieAction;
-use minipress\core\actions\LogoutAction;
+use minipress\core\webui\actions\LogoutAction;
 use minipress\core\webui\actions\SigninAction;
 use minipress\core\webui\actions\CreateArticleAction;
 use minipress\core\webui\actions\getArticleAction;
 use minipress\core\webui\actions\getArticleByCategorieAction;
 use minipress\core\webui\actions\GetCreateArticleAction;
+use minipress\core\webui\actions\GetCategorieAction;
 
 
 use Slim\App;
@@ -25,6 +26,7 @@ return function (App $app): App {
 
     $app->get('/categories/create', GetCreateCategorieAction::class)->setName('cate_cree_get');
     $app->post('/categories/create', PostCreateCategorieAction::class)->setName('cate_cree_post');
+    $app->get('/categories', GetCategorieAction::class)->setName('categories');
 
     $app->get('/articles', getArticleAction::class)->setName('articles');                          
     $app->get('/articles/create',  GetCreateArticleAction::class)->setName('create_article');       

@@ -7,6 +7,7 @@ namespace minipress\core\application_core\application\usecases;
 use minipress\core\application_core\domain\entities\Categorie;
 use minipress\core\application_core\domain\Exception\CategorieException;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use InvalidArgumentException;
 
 class CategorieService implements CategorieInterface
@@ -33,6 +34,18 @@ class CategorieService implements CategorieInterface
             return Categorie::all()->toArray();
         } catch (QueryException $e) {
             throw new CategorieException("Erreur lors de la récupération des catégories." . $e->getMessage());
+        }
+    }
+
+    public function getCategorieById(int $id): array
+    {
+        try {
+            $categorie = Categorie::findOrFail($id);
+            return $categorie->toArray();
+        } catch (QueryException $e) {
+            throw new CategorieException("Erreur lors de la récupération de la catégorie." . $e->getMessage());
+        } catch (ModelNotFoundException $e) {
+            throw new CategorieException("La catégorie avec l'ID $id est introuvable.", 404);
         }
     }
 }

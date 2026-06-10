@@ -1,0 +1,11 @@
+{% extends "index.twig" %}
+
+{% block content %}
+    <h1>Liste des Articles</h1>
+    
+    <ul>
+        {% for c in articles %}
+            <li><p>{{ c.titre }}, {{ c.cree }}</p></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

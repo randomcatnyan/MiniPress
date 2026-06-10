@@ -26,7 +26,7 @@ class AuthnService implements AuthnInterface
 
             $user->email = $email;
             $user->mdp = $mdp;
-            $$user->role = Utilisateur::ROLE_USER;
+            $user->role = Utilisateur::ROLE_USER;
 
             $user->save();   
 
@@ -38,13 +38,13 @@ class AuthnService implements AuthnInterface
     public function byCredentials(string $email, string $password): Utilisateur
     {
         try {
-            $user = Utilisateur::where('user_id', $email)->firstOrFail();
+            $user = Utilisateur::where('email', $email)->firstOrFail();
 
             if (!$user) {
                 throw new \InvalidArgumentException("Email ou mot de passe incorrect.");
             }
 
-            if (!password_verify($password, $user->password)) {
+            if (!password_verify($password, $user->mdp)) {
                 throw new \InvalidArgumentException("Email ou mot de passe incorrect.");
             }
 

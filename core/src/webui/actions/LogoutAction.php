@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace minipress\core\actions;
+namespace minipress\core\webui\actions;
 
 use Slim\Routing\RouteContext;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -18,6 +18,6 @@ class LogoutAction
         session_unset();
         session_destroy();
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
-        return $response->withHeader('Location', '/login')->withStatus(302);
+        return $response->withHeader('Location', '/home')->withStatus(302);
     }
 }

@@ -1,0 +1,15 @@
+{% extends "index.twig" %}
+
+{% block content %}
+    <h1>Articles de la catégorie {{ categorie.titre }}</h1>
+
+    <ul>
+        {% for a in articles %}
+            <li>{{ a.titre }} — {{ a.cree }}</li>
+        {% else %}
+            <li>Aucun article dans cette catégorie.</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{{ url_for('categories') }}">Retour aux catégories</a></p>
+{% endblock %}

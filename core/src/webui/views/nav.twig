@@ -1,10 +1,22 @@
 <nav>
     <ul style="list-style:none; display:flex; gap:1rem; padding:0; margin:0; align-items:center;";>
             <li><a href="{{ url_for('home') }}" class="nav-link">home</a></li>
+
             {% if user %}
             <li><a href="{{ url_for('cate_cree_get') }}" class="nav-link">cree ta categorie</a></li>
             <li><a href="{{ url_for('create_article') }}" class="nav-link">cree ton article</a></li>
             {% endif %}
 
+            <li><a href="{{ url_for('articles') }}" class="nav-link">voir les articles</a></li>
+            <li><a href="{{ url_for('categories') }}" class="nav-link">voir les categories</a></li>
+            
+            {% if user %}
+            <li style="margin-left:auto;"><a href="{{ url_for('logout') }}" class="nav-link">se deconnecter</a></li>
+            {% else %}
+            <li style="margin-left:auto;"><a href="{{ url_for('signin') }}" class="nav-link">se connecter</a></li>
+            {% endif %}
+            
+
+           
     </ul>
 </nav>

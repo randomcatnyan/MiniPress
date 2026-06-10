@@ -48,7 +48,7 @@ class SigninAction extends AbstractAction
 
         try {
             $this->authProvider->signin($email, $password);
-            return $rs->withHeader('Location', '/articles')->withStatus(302);
+            return $rs->withHeader('Location', '/home')->withStatus(302);
         } catch (\Exception $e) {
             throw new HttpInternalServerErrorException($rq, "Erreur lors de l'authentification : " . $e->getMessage());
         }

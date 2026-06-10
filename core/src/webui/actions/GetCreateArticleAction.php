@@ -16,6 +16,6 @@ class GetCreateArticleAction extends AbstractAction
         $view  = Twig::fromRequest($rq);
         $token = (new CsrfTokenProvider())->generate();
         $categories = (new CategorieService())->getCategorie();
-        return $view->render($rs, 'CreateArticle.twig', ['csrf' => $token, 'categories' => $categories]);
+        return $view->render($rs, 'CreateArticleForm.twig', ['csrf' => $token, 'categories' => $categories]);
     }
 }
