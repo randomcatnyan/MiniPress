@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\appli\application_core\application\usecases;
+namespace minipress\core\application_core\application\usecases;
 
 use gift\appli\application_core\domain\entities\Article;
 use Exception;
