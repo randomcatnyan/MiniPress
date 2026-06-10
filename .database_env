@@ -3,8 +3,3 @@ host=sql.db
 database=minipress
 username=minipress
 password=root
-
-MARIADB_ROOT_PASSWORD=root
-MARIADB_DATABASE=minipress
-MARIADB_USER=minipress
-MARIADB_PASSWORD=root
