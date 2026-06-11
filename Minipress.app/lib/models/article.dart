@@ -1,18 +1,16 @@
-/// Modèle de données pour un Article MiniPress
-/// Adapté au format JSON de l'API MiniPress.core (/api/articles et /api/articles/{id})
+// Modèle de données qui représente un Article dans notre application.
+// Il permet de transformer les données JSON reçues de l'API en objet utilisable en Dart.
 class Article {
-  final int? id;
-  final String titre;
-  final String? resume;
-  final String? contenu;
-  final String? imageUrl;
-  final int? categorieId;
-  final String? categorieNom;
-  /// Auteur : peut être un String (liste) ou extrait d'un objet (détail)
-  final String? auteurNom;
-  final String? cree;
-  /// Lien vers l'API (fourni dans la liste)
-  final String? lien;
+  final int? id; // L'identifiant unique de l'article (peut être nul si absent de la liste)
+  final String titre; // Le titre de l'article
+  final String? resume; // Le résumé court de l'article (optionnel)
+  final String? contenu; // Le texte complet de l'article (optionnel)
+  final String? imageUrl; // Le lien vers l'image d'illustration (optionnel)
+  final int? categorieId; // L'identifiant de la catégorie de l'article (optionnel)
+  final String? categorieNom; // Le nom textuel de sa catégorie (optionnel)
+  final String? auteurNom; // Le nom de l'auteur de l'article (optionnel)
+  final String? cree; // La date de création sous forme de texte (ex: "2026-06-11 10:00:00") (optionnel)
+  final String? lien; // Le chemin vers l'API pour charger les détails de cet article (optionnel)
 
   const Article({
     this.id,
@@ -27,7 +25,7 @@ class Article {
     this.lien,
   });
 
-  /// Construit depuis la liste /api/articles → {titre, cree, auteur (string), lien}
+  // Construit un objet Article à partir du JSON simplifié renvoyé par la liste de l'API (/api/articles)
   factory Article.fromListJson(Map<String, dynamic> json) {
     return Article(
       titre: (json['titre'] as String?) ?? 'Sans titre',
@@ -37,9 +35,10 @@ class Article {
     );
   }
 
-  /// Construit depuis le détail /api/articles/{id}
+  // Construit un objet Article complet à partir du JSON détaillé renvoyé par l'API (/api/articles/{id})
   factory Article.fromDetailJson(Map<String, dynamic> json) {
-    // L'auteur peut être un objet {nom: ...} ou une String
+    // Dans l'API, l'auteur peut être soit une simple chaîne de caractères (String),
+    // soit un objet Map contenant {'nom': '...'}
     String? auteur;
     final auteurField = json['auteur'];
     if (auteurField is Map<String, dynamic>) {
@@ -48,8 +47,11 @@ class Article {
       auteur = auteurField;
     }
 
+    // Récupère les infos de la catégorie imbriquée si elle existe
     final categorie = json['categorie'] as Map<String, dynamic>?;
 
+    // Petite fonction utilitaire pour convertir en entier de manière sécurisée
+    // car l'API peut parfois renvoyer des IDs sous forme de texte ("1" au lieu de 1)
     int? parseInt(dynamic val) {
       if (val == null) return null;
       if (val is int) return val;
@@ -69,7 +71,7 @@ class Article {
     );
   }
 
-  /// Extrait l'ID numérique depuis le lien (ex: /api/articles/42)
+  // Permet d'extraire l'ID de l'article depuis son lien API (ex: "/api/articles/5" -> 5)
   int? get idFromLien {
     if (lien == null) return null;
     final parts = lien!.split('/');
