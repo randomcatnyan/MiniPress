@@ -1,0 +1,21 @@
+{% extends "index.twig" %}
+
+{% block content %}
+    <h1>cree un user</h1>
+    <form action="{{ url_for('cree_user_post') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf }}">
+        <p>
+            <label for="nom">Nom</label><br>
+            <input type="text" id="nom" name="nom" required placeholder="Ex: Dupont">
+        </p>
+        <p>
+            <label for="email">email</label><br>
+            <input type="email" id="email" name="email" required placeholder="azerty@mail.com">
+        </p>
+        <p>
+            <label for="mdp">mdp</label><br>
+            <input type="password" id="mdp" name="mdp" required minlength="4">
+        </p>
+        <button type="submit">cree le compte</button>
+    </form>
+{% endblock %}

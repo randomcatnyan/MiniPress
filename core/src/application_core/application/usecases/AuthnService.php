@@ -7,20 +7,21 @@ use minipress\core\application_core\domain\entities\Utilisateur;
 class AuthnService implements AuthnInterface
 {
 
-    public function registerUser(string $email, string $password): void
+    public function registerUser(string $email, string $password, string $nom): void
     {
         try{
 
             $email = filter_var($email, FILTER_VALIDATE_EMAIL);
             if (!$email) {
-                throw new \InvalidArgumentException("Email invalide.");
+                throw new \InvalidArgumentException("pas le bon format pour l'email");
             }
             
             if (Utilisateur::where('email', $email)->exists()) {
-                throw new \InvalidArgumentException("Un utilisateur avec cet email existe déjà.");
+                throw new \InvalidArgumentException("qqn existe deja avec cet email");
             }
             
             $user = new Utilisateur();
+            $user->nom = $nom;
             $mdp = password_hash($password, PASSWORD_BCRYPT);
             $user->email = $email;
             $user->mdp = $mdp;
