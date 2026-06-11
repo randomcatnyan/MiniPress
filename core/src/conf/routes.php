@@ -11,6 +11,8 @@ use minipress\core\webui\actions\GetArticleAction;
 use minipress\core\webui\actions\GetArticleByCategorieAction;
 use minipress\core\webui\actions\GetCreateArticleAction;
 use minipress\core\webui\actions\GetCategorieAction;
+use minipress\core\webui\actions\GetCreeUserAction;
+use minipress\core\webui\actions\PostCreeUserAction;
 
 
 use Slim\App;
@@ -32,6 +34,9 @@ return function (App $app): App {
     $app->get('/articles/create',  GetCreateArticleAction::class)->setName('create_article');       
     $app->post('/articles/create', CreateArticleAction::class)->setName('create_article_post');     
     $app->get('/categories/{id}/articles', GetArticleByCategorieAction::class)->setName('articles_by_cat'); 
+
+    $app->get('/users/create',  GetCreeUserAction::class)->setName('cree_user_get');
+    $app->post('/users/create', PostCreeUserAction::class)->setName('cree_user_post');
 
 
     return $app;

@@ -3,19 +3,23 @@
             <li><a href="{{ url_for('home') }}" class="nav-link">home</a></li>
 
             {% if user %}
-            <li><a href="{{ url_for('cate_cree_get') }}" class="nav-link">cree ta categorie</a></li>
-            <li><a href="{{ url_for('create_article') }}" class="nav-link">cree ton article</a></li>
+                <li><a href="{{ url_for('cate_cree_get') }}" class="nav-link">cree ta categorie</a></li>
+                <li><a href="{{ url_for('create_article') }}" class="nav-link">cree ton article</a></li>
+                {% if user.role=='admin' %}
+                    <li><a href="{{ url_for('cree_user_get') }}" class="nav-link">cree un user</a></li>
+                {% endif %}
+            
             {% endif %}
 
             <li><a href="{{ url_for('articles') }}" class="nav-link">voir les articles</a></li>
             <li><a href="{{ url_for('categories') }}" class="nav-link">voir les categories</a></li>
             
-            {% if user %}
-            <li style="margin-left:auto;"><a href="{{ url_for('logout') }}" class="nav-link">se deconnecter</a></li>
-            {% else %}
-            <li style="margin-left:auto;"><a href="{{ url_for('signin') }}" class="nav-link">se connecter</a></li>
-            {% endif %}
             
+            {% if user %}
+                <li style="margin-left:auto;"><a href="{{ url_for('logout') }}" class="nav-link">se deconnecter</a></li>
+            {% else %}
+                <li style="margin-left:auto;"><a href="{{ url_for('signin') }}" class="nav-link">se connecter</a></li>
+            {% endif %}
 
            
     </ul>
