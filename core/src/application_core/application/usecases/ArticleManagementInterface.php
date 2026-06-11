@@ -8,5 +8,6 @@ interface ArticleManagementInterface
     public function getArticleSorted(?string $sort = null): array;
     public function getArticleByCategorie(int $categorieId): array;
     public function getArticleById(int $id): array;
+    public function publier(int $id): void;
 
 }

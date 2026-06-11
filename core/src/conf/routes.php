@@ -17,6 +17,7 @@ use minipress\core\api\actions\GetArticleCompletApiAction;
 use minipress\core\api\actions\GetArticleByCategorieApiAction;
 use minipress\core\webui\actions\GetCreeUserAction;
 use minipress\core\webui\actions\PostCreeUserAction;
+use minipress\core\webui\actions\PublierAction;
 
 
 use Slim\App;
@@ -46,6 +47,8 @@ return function (App $app): App {
 
     $app->get('/cree/user',  GetCreeUserAction::class)->setName('cree_user_get');
     $app->post('/cree/user', PostCreeUserAction::class)->setName('cree_user_post');
+
+    $app->post('/articles/{id}/toggle', PublierAction::class)->setName('publier');
 
 
     

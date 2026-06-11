@@ -5,7 +5,25 @@
     
     <ul>
         {% for c in articles %}
-            <li><p>{{ c.titre }}, {{ c.cree }} par {{ c.auteur.nom }}</p></li>
+<li style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>{{ c.titre }}</strong>, {{ c.cree }} par {{ c.auteur.nom }}
+                    
+                    {% if c.est_publie == 1 %}
+                        <span style="color: green; font-weight: bold; margin-left: 10px;">publier</span>
+                    {% else %}
+                        <span style="color: red; font-weight: bold; margin-left: 10px;">pas publier</span>
+                    {% endif %}
+                </div>
+                {% if user and user.id == c.auteur_id %}
+                    <form action="{{ url_for('publier', {'id': c.id}) }}" method="POST" style="margin: 0;">
+                        <button type="submit">
+                            {% if c.est_publie == 1 %} Dépublier {% else %} Publier {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
+
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

@@ -36,6 +36,9 @@ class GetArticleByCategorieApiAction
 
         $tab = [];
             foreach ($articles as $article) {
+                if ((int)$article['est_publie'] !== 1) {
+                continue; 
+            }
                 $tab[] = [
                     'titre' => $article['titre'],
                     'cree' => $article['cree'],
