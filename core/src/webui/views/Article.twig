@@ -5,16 +5,17 @@
     
     <ul>
         {% for c in articles %}
-<li style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>{{ c.titre }}</strong>, {{ c.cree }} par {{ c.auteur.nom }}
-                    
+            <li>
+                <div class ="info">
+                    <strong>{{ c.titre }}</strong>
                     {% if c.est_publie == 1 %}
-                        <span style="color: green; font-weight: bold; margin-left: 10px;">publier</span>
+                        <span class="badge badge--pub">publier</span>
                     {% else %}
-                        <span style="color: red; font-weight: bold; margin-left: 10px;">pas publier</span>
+                        <span class="badge badge--draft">pas publier</span>
                     {% endif %}
+                    <div class ="meta">{{ c.cree }} par {{ c.auteur.nom }}</div>
                 </div>
+                
                 {% if user and user.id == c.auteur_id %}
                     <form action="{{ url_for('publier', {'id': c.id}) }}" method="POST" style="margin: 0;">
                         <button type="submit">
