@@ -6,5 +6,6 @@ interface ArticleManagementInterface
     public function creerArticle(array $data): string;
     public function getArticle(): array;
     public function getArticleByCategorie(int $categorieId): array;
+    public function getArticleById(int $id): array;
 
 }

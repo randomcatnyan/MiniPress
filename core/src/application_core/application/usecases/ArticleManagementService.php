@@ -48,4 +48,16 @@ class ArticleManagementService implements ArticleManagementInterface
             throw new ArticleException("Erreur de base de données.");
         }
     }
+
+    public function getArticleById(int $id): array
+    {
+        try {
+            $article = Article::with('auteur')->findOrFail($id);
+            return $article->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new ArticleException("L'article avec l'ID $id est introuvable.", 404);
+        } catch (QueryException $e) {
+            throw new ArticleException("Erreur de base de données.");
+        }
+    }
 }

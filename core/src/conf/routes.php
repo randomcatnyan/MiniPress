@@ -11,6 +11,10 @@ use minipress\core\webui\actions\GetArticleAction;
 use minipress\core\webui\actions\GetArticleByCategorieAction;
 use minipress\core\webui\actions\GetCreateArticleAction;
 use minipress\core\webui\actions\GetCategorieAction;
+use minipress\core\api\actions\GetCategoriesApiAction;
+use minipress\core\api\actions\GetArticleApiAction;
+use minipress\core\api\actions\GetArticleCompletApiAction;
+use minipress\core\api\actions\GetArticleByCategorieApiAction;
 
 
 use Slim\App;
@@ -33,6 +37,11 @@ return function (App $app): App {
     $app->post('/articles/create', CreateArticleAction::class)->setName('create_article_post');     
     $app->get('/categories/{id}/articles', GetArticleByCategorieAction::class)->setName('articles_by_cat'); 
 
+    $app->get('/api/categories', GetCategoriesApiAction::class)->setName('api_categories');
+    $app->get('/api/articles', GetArticleApiAction::class)->setName('api_articles');
+    $app->get('/api/articles/{id}', GetArticleCompletApiAction::class)->setName('api_article_complet');
+    $app->get('/api/categories/{id}/articles', GetArticleByCategorieApiAction::class)->setName('api_articles_by_cat');
 
+    
     return $app;
 };
