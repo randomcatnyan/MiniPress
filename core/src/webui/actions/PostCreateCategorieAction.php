@@ -11,7 +11,8 @@ use minipress\core\webui\providers\CsrfTokenProvider;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Views\Twig;
-use minipress\core\webui\providers\AuthProvider;    
+use minipress\core\webui\providers\AuthProvider;
+use Slim\Routing\RouteContext;
 
 class PostCreateCategorieAction
 {
@@ -46,11 +47,10 @@ class PostCreateCategorieAction
                 'description' => $description
             ]);
             $token = (new CsrfTokenProvider())->generate();
-            $view = Twig::fromRequest($request);
-
-            return $view->render($response, 'home.twig', [
-                'csrf' => $token
-            ]);
+            $routeContext = RouteContext::fromRequest($request);
+            $routeParser = $routeContext->getRouteParser();
+            $url = $routeParser->urlFor('categories');
+            return $response->withHeader('Location', $url)->withStatus(302);
         } catch (\Exception $e) {
             throw new HttpInternalServerErrorException($request, "erreur creation " . $e->getMessage());
         }
