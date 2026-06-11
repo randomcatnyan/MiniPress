@@ -20,8 +20,11 @@ class GetArticleApiAction
 
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
+        $paramSort = $rq->getQueryParams();
+        $sort = $paramSort['sort'] ?? null;
+        
         try {
-            $articles = $this->articleManagementService->getArticle();
+            $articles = $this->articleManagementService->getArticleSorted($sort);
         } catch (\Exception $e) {
             throw new HttpInternalServerErrorException($rq, "Erreur lors de la récupération des articles.");
         }

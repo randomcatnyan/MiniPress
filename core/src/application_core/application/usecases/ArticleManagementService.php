@@ -38,6 +38,30 @@ class ArticleManagementService implements ArticleManagementInterface
         }
     }
 
+    public function getArticleSorted(?string $sort = null): array
+    {
+        try {
+            $query = Article::with('auteur');
+
+            switch ($sort) {
+            case 'date-asc':
+                $query->orderBy('cree', 'asc');
+                break;
+            case 'date-desc':
+                $query->orderBy('cree', 'desc');
+                break;
+            case 'auteur':
+                $query->orderBy('auteur_id', 'asc');
+                break;
+            default:
+                $query->orderBy('cree', 'desc');
+        }
+            return $query->get()->toArray();
+        } catch (QueryException $e) {
+            throw new ArticleException("Erreur lors de la récupération des articles.");
+        }
+    }
+
     public function getArticleByCategorie(int $categorieId): array
     {
         try {
