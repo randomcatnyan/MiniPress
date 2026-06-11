@@ -18,6 +18,8 @@ use minipress\core\api\actions\GetArticleByCategorieApiAction;
 use minipress\core\webui\actions\GetCreeUserAction;
 use minipress\core\webui\actions\PostCreeUserAction;
 use minipress\core\webui\actions\PublierAction;
+use minipress\core\api\actions\GetArticleByAuteurApiAction;
+
 
 
 use Slim\App;
@@ -44,6 +46,8 @@ return function (App $app): App {
     $app->get('/api/articles', GetArticleApiAction::class)->setName('api_articles');
     $app->get('/api/articles/{id}', GetArticleCompletApiAction::class)->setName('api_article_complet');
     $app->get('/api/categories/{id}/articles', GetArticleByCategorieApiAction::class)->setName('api_articles_by_cat');
+    $app->get('/api/auteurs/{id}/articles', GetArticleByAuteurApiAction::class)->setName('api_articles_by_auteur');
+
 
     $app->get('/cree/user',  GetCreeUserAction::class)->setName('cree_user_get');
     $app->post('/cree/user', PostCreeUserAction::class)->setName('cree_user_post');

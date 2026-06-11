@@ -9,5 +9,6 @@ interface ArticleManagementInterface
     public function getArticleByCategorie(int $categorieId): array;
     public function getArticleById(int $id): array;
     public function publier(int $id): void;
+    public function getArticleByAuteur(int $id): array;
 
 }
