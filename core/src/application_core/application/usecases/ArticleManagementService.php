@@ -60,4 +60,15 @@ class ArticleManagementService implements ArticleManagementInterface
             throw new ArticleException("Erreur de base de données.");
         }
     }
+
+    public function publier(int $id): void
+    {
+        try {
+            $article = Article::findOrFail($id);
+            $article->est_publie = $article->est_publie ? 0 : 1;
+            $article->save();
+        } catch (\Exception $e) {
+            throw new ArticleException("erreur bdd " . $e->getMessage());
+        }
+    }
 }
