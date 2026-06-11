@@ -35,8 +35,8 @@ return function (App $app): App {
     $app->post('/articles/create', CreateArticleAction::class)->setName('create_article_post');     
     $app->get('/categories/{id}/articles', GetArticleByCategorieAction::class)->setName('articles_by_cat'); 
 
-    $app->get('/users/create',  GetCreeUserAction::class)->setName('cree_user_get');
-    $app->post('/users/create', PostCreeUserAction::class)->setName('cree_user_post');
+    $app->get('/cree/user',  GetCreeUserAction::class)->setName('cree_user_get');
+    $app->post('/cree/user', PostCreeUserAction::class)->setName('cree_user_post');
 
 
     return $app;
