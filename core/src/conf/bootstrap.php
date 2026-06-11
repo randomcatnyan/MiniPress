@@ -25,6 +25,7 @@ $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
 
 
-$app = (require_once __DIR__ . '/routes.php')($app);
+$routesFile = $routesFile;
+$app = (require __DIR__ . '/' . $routesFile)($app);
 
 return $app;

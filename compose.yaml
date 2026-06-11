@@ -29,12 +29,12 @@ services:
     volumes:
       - "./web/src:/usr/share/nginx/html:ro"
   
-  core:
+  coreadmin:
     build:
       context: core
       dockerfile: ./core.Dockerfile
     ports:
-      - "8081:80"
+      - "8084:80"
     volumes:
       - "./core:/app"
     depends_on:
@@ -42,7 +42,23 @@ services:
     networks:
       - minipress.net
     working_dir: /app
-    command: 'sh -c "composer install && php -S 0.0.0.0:80 -t /app/public"'
+    command: 'sh -c "composer install && php -S 0.0.0.0:80 -t /app/public/admin"'
+
+  coreapi:
+    build:
+      context: core
+      dockerfile: ./core.Dockerfile
+    ports:
+      - "8083:80"
+    volumes:
+      - "./core:/app"
+    depends_on:
+      - sql
+    networks:
+      - minipress.net
+    working_dir: /app
+    command: 'sh -c "composer install && php -S 0.0.0.0:80 -t /app/public/api /app/public/api/index.php"'
+
 
 networks:
   minipress.net:
