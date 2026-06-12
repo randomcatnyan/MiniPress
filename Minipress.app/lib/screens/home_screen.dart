@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/article.dart';
 import '../models/categorie.dart';
 import '../services/api_service.dart';
 import '../widgets/article_card.dart';
+import '../widgets/categorie_chip.dart';
 import 'article_detail_screen.dart';
 
 // Écran principal de l'application (liste des articles et catégories)
@@ -177,39 +179,51 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('MiniPress'),
         actions: [
-          // Affichage du nombre d'articles en haut à droite
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                '${filtered.length} article(s)',
-                style: const TextStyle(fontSize: 14),
+          // Badge moderne affichant le nombre d'articles
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xFF4F46E5).withOpacity(0.08), // Arrière-plan indigo doux
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              '${filtered.length} articles',
+              style: GoogleFonts.outfit(
+                color: const Color(0xFF4F46E5),
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          )
+          ),
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 1. En-tête de la section des catégories
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 14, 16, 2),
             child: Text(
-              'Catégories',
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+              'CATÉGORIES',
+              style: GoogleFonts.outfit(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: const Color(0xFF94A3B8), // slate-400
+                letterSpacing: 1.2,
+              ),
             ),
           ),
           
           // 2. Affichage des catégories (chargement, erreur ou liste déroulante)
           if (_loadingCategories)
             const Center(child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(12.0),
               child: CircularProgressIndicator(),
             ))
           else if (_errorCategories != null)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
                 'Erreur catégories: $_errorCategories',
                 style: const TextStyle(color: Colors.red),
@@ -218,25 +232,21 @@ class _HomeScreenState extends State<HomeScreen> {
           else
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               child: Row(
                 children: [
                   // Puce "Tous" pour réinitialiser le filtre de catégorie
-                  ChoiceChip(
-                    label: const Text('Tous'),
-                    selected: _selectedCategorieId == null,
-                    onSelected: (selected) => _selectCategorie(null),
+                  CategorieChip(
+                    categorie: const Categorie(id: -1, titre: 'Tous'),
+                    isSelected: _selectedCategorieId == null,
+                    onTap: () => _selectCategorie(null),
                   ),
-                  const SizedBox(width: 8),
                   // Afficher chaque catégorie récupérée de l'API
                   ..._categories.map((cat) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: ChoiceChip(
-                        label: Text(cat.titre),
-                        selected: _selectedCategorieId == cat.id,
-                        onSelected: (selected) => _selectCategorie(cat.id),
-                      ),
+                    return CategorieChip(
+                      categorie: cat,
+                      isSelected: _selectedCategorieId == cat.id,
+                      onTap: () => _selectCategorie(cat.id),
                     );
                   }),
                 ],
@@ -245,24 +255,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // 3. Champ de saisie pour la recherche par mot-clé
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
               controller: _searchController,
               onChanged: (val) => setState(() => _searchQuery = val),
               decoration: InputDecoration(
                 hintText: 'Rechercher un article...',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search, size: 20),
                 suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
+                    ? GestureDetector(
+                        onTap: () {
                           _searchController.clear();
                           setState(() => _searchQuery = '');
                         },
+                        child: const Icon(Icons.cancel, size: 20),
                       )
                     : null,
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
               ),
             ),
           ),
@@ -270,16 +278,18 @@ class _HomeScreenState extends State<HomeScreen> {
           // 4. Badge affiché si un filtre d'auteur est actif
           if (_selectedAuthorName != null)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Chip(
-                label: Text('Auteur: $_selectedAuthorName'),
+                avatar: const Icon(Icons.person_outline, size: 16, color: Color(0xFF4F46E5)),
+                label: Text('Auteur : $_selectedAuthorName'),
                 onDeleted: () => setState(() => _selectedAuthorName = null), // Bouton "X" pour enlever le filtre
+                deleteIconColor: const Color(0xFF64748B),
               ),
             ),
 
           // 5. Ligne de titre de la catégorie actuelle et bouton de tri
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -290,14 +300,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           .firstWhere((c) => c.id == _selectedCategorieId,
                               orElse: () => const Categorie(id: -1, titre: ''))
                           .titre,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.outfit(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF0F172A),
+                  ),
                 ),
                 // Bouton interactif pour inverser le tri chronologique
                 TextButton.icon(
                   onPressed: () => setState(() => _sortAscending = !_sortAscending),
-                  icon: Icon(_sortAscending ? Icons.arrow_upward : Icons.arrow_downward),
-                  label: Text(_sortAscending ? 'Plus anciens' : 'Plus récents'),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    side: const BorderSide(color: Color(0xFFE2E8F0)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                  icon: Icon(
+                    _sortAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                    size: 16,
+                  ),
+                  label: Text(
+                    _sortAscending ? 'Plus anciens' : 'Plus récents',
+                    style: const TextStyle(fontSize: 12),
+                  ),
                 ),
               ],
             ),
