@@ -5791,7 +5791,9 @@
 
   // ts/module/ui.ts
   var import_handlebars = __toESM(require_handlebars());
+  var articlesActuels = [];
   function displayArticle(articles) {
+    articlesActuels = articles;
     const templateScript = document.getElementById("ArticleTemplate");
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("Article");
@@ -5831,6 +5833,35 @@
       contenu: article.contenu ?? ""
     });
   }
+  function tri() {
+    const selectTri = document.getElementById("tri-date");
+    if (selectTri) {
+      selectTri.addEventListener("change", () => {
+        const ordre = selectTri.value.trim().toLowerCase();
+        let articlesTries = [...articlesActuels];
+        if (articlesTries.length === 0)
+          return;
+        if (ordre === "asc") {
+          articlesTries.sort((a, b) => {
+            if (a.cree < b.cree)
+              return -1;
+            if (a.cree > b.cree)
+              return 1;
+            return 0;
+          });
+        } else if (ordre === "desc") {
+          articlesTries.sort((a, b) => {
+            if (a.cree > b.cree)
+              return -1;
+            if (a.cree < b.cree)
+              return 1;
+            return 0;
+          });
+        }
+        displayArticle(articlesTries);
+      });
+    }
+  }
 
   // ts/module/categorieloader.ts
   async function loadCategories() {
@@ -5851,8 +5882,7 @@
   document.addEventListener("DOMContentLoaded", async () => {
     loadArticles().then((articles) => displayArticle(articles));
     loadCategories().then((categories) => displayCategories(categories));
+    tri();
   });
-  loadArticles().then((articles) => displayArticle(articles));
-  loadCategories().then((categories) => displayCategories(categories));
 })();
 //# sourceMappingURL=index.js.map

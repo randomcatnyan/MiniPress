@@ -1,5 +1,5 @@
 import { loadArticles } from "./module/articleloader";
-import { displayArticle, displayCategories } from "./module/ui";
+import { displayArticle, displayCategories, tri } from "./module/ui";
 import { loadCategories } from "./module/categorieloader";
 import { Article, Categorie } from "./module/types";
 
@@ -17,8 +17,6 @@ if (p) p.textContent = "aadsdda";
 document.addEventListener("DOMContentLoaded", async () => {
   loadArticles().then((articles: any) => displayArticle(articles));
   loadCategories().then((categories: any) => displayCategories(categories))
+  tri();
 });
-
-loadArticles().then((articles: Article[]) => displayArticle(articles));
-loadCategories().then((categories: Categorie[]) => displayCategories(categories));
 

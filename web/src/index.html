@@ -11,23 +11,30 @@
 
   <body>
     <h3>Liste des articles</h3>
+    <div class="tri-container">
+      <label for="tri-date">trie des articles</label>
+      <select id="tri-date">
+        <option value="desc">vieux au recent</option>
+        <option value="asc">recent au vieux</option>
+      </select>
+    </div>
+    <h3>Liste des articles</h3>
+    <section id="Article"></section>
     <section id="Article"></section>
     <script id="ArticleTemplate" type="text/x-handlebars-template">
-
-        {{#each articles}}
-            <article>
-                <h3><a href='#' data-lien="{{lien}}">{{titre}}</a></h3>
-                <p>{{cree}} — par {{auteur}}</p>
-            </article>
-        {{/each}}
-    </script>
-
-    <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
+      {{#each articles}}
         <article>
-            <h2>{{titre}}</h2>
-            <p>{{cree}} — par {{auteur}}</p>
-            <div class="resume">{{{resume}}}</div>
-            <div class="contenu">{{{contenu}}}</div>
+          <h3><a href="#" data-lien="{{lien}}">{{titre}}</a></h3>
+          <p>{{cree}} — par {{auteur}}</p>
+        </article>
+      {{/each}}
+    </script>
+    <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
+      <article>
+          <h2>{{titre}}</h2>
+          <p>{{cree}} — par {{auteur}}</p>
+          <div class="resume">{{{resume}}}</div>
+          <div class="contenu">{{{contenu}}}</div>
     </script>
 
     <h3>liste des categories</h3>
@@ -35,7 +42,7 @@
     <script id="cate" type="text/x-handlebars-template">
       {{#each categories}}
         <li class="categorie-item" data-id="{{id}}">
-          <a href="#" ><strong>{{titre}}</strong></a>
+          <a href="#"><strong>{{titre}}</strong></a>
           {{#if description}}
             <p>{{description}}</p>
           {{/if}}
