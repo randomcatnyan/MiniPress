@@ -4826,11 +4826,11 @@
           var revision = _base.COMPILER_REVISION, versions = _base.REVISION_CHANGES[revision];
           return [revision, versions];
         },
-        appendToBuffer: function appendToBuffer(source, location, explicit) {
+        appendToBuffer: function appendToBuffer(source, location2, explicit) {
           if (!_utils.isArray(source)) {
             source = [source];
           }
-          source = this.source.wrap(source, location);
+          source = this.source.wrap(source, location2);
           if (this.environment.isSimple) {
             return ["return ", source, ";"];
           } else if (explicit) {
@@ -5771,10 +5771,19 @@
     const data = await response.json();
     return data;
   }
+  async function loadArticleComplet(lien) {
+    const base = API_URL.replace("/api", "");
+    const reponse = await fetch(`${base}${lien}`);
+    if (!reponse.ok) {
+      throw new Error(`Erreur ${reponse.status}`);
+    }
+    const data = await reponse.json();
+    return data;
+  }
   async function loadArticlesByCategorie(id) {
     const response = await fetch(`${API_URL}/categories/${id}/articles`);
     if (!response.ok) {
-      throw new Error(`erruer ${response.status}`);
+      throw new Error(`Erreur ${response.status}`);
     }
     const data = await response.json();
     return data.articles;
@@ -5787,18 +5796,39 @@
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("Article");
     section.innerHTML = template({ articles });
+    section.addEventListener("click", (e) => {
+      const cible = e.target.closest("[data-lien]");
+      if (!cible)
+        return;
+      e.preventDefault();
+      const lien = cible.dataset.lien;
+      loadArticleComplet(lien).then(displayArticleComplet);
+    });
   }
   function displayCategories(categories) {
     const templateScript = document.getElementById("cate");
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("categories");
     section.innerHTML = template({ categories });
-    document.querySelectorAll(".categorie-item a").forEach((a) => {
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        const id = Number(a.closest(".categorie-item").dataset.id);
-        loadArticlesByCategorie(id).then((articles) => displayArticle(articles));
-      });
+    section.addEventListener("click", (e) => {
+      const cible = e.target.closest(".categorie-item");
+      if (!cible)
+        return;
+      e.preventDefault();
+      const id = Number(cible.dataset.id);
+      loadArticlesByCategorie(id).then(displayArticle);
+    });
+  }
+  function displayArticleComplet(article) {
+    const templateScript = document.getElementById("ArticleCompletTemplate");
+    const template = import_handlebars.default.compile(templateScript.innerHTML);
+    const section = document.getElementById("Article");
+    section.innerHTML = template({
+      titre: article.titre,
+      cree: article.cree,
+      auteur: article.auteur.nom,
+      resume: article.resume ?? "",
+      contenu: article.contenu ?? ""
     });
   }
 
@@ -5813,7 +5843,8 @@
   }
 
   // ts/main.ts
-  console.log("ss");
+  var hotReload = new EventSource("/esbuild") ?? null;
+  hotReload?.addEventListener("change", () => location.reload());
   var p = document.querySelector("p");
   if (p)
     p.textContent = "aadsdda";
@@ -5821,5 +5852,7 @@
     loadArticles().then((articles) => displayArticle(articles));
     loadCategories().then((categories) => displayCategories(categories));
   });
+  loadArticles().then((articles) => displayArticle(articles));
+  loadCategories().then((categories) => displayCategories(categories));
 })();
 //# sourceMappingURL=index.js.map

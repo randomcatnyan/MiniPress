@@ -13,12 +13,21 @@
     <h3>Liste des articles</h3>
     <section id="Article"></section>
     <script id="ArticleTemplate" type="text/x-handlebars-template">
-      {{#each articles}}
+
+        {{#each articles}}
+            <article>
+                <h3><a href='#' data-lien="{{lien}}">{{titre}}</a></h3>
+                <p>{{cree}} — par {{auteur}}</p>
+            </article>
+        {{/each}}
+    </script>
+
+    <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
         <article>
-          <h3>{{titre}}</h3>
-          <p>{{cree}} — par {{auteur}}</p>
-        </article>
-      {{/each}}
+            <h2>{{titre}}</h2>
+            <p>{{cree}} — par {{auteur}}</p>
+            <div class="resume">{{{resume}}}</div>
+            <div class="contenu">{{{contenu}}}</div>
     </script>
 
     <h3>liste des categories</h3>
