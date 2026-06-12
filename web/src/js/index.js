@@ -4826,11 +4826,11 @@
           var revision = _base.COMPILER_REVISION, versions = _base.REVISION_CHANGES[revision];
           return [revision, versions];
         },
-        appendToBuffer: function appendToBuffer(source, location2, explicit) {
+        appendToBuffer: function appendToBuffer(source, location, explicit) {
           if (!_utils.isArray(source)) {
             source = [source];
           }
-          source = this.source.wrap(source, location2);
+          source = this.source.wrap(source, location);
           if (this.environment.isSimple) {
             return ["return ", source, ";"];
           } else if (explicit) {
@@ -5771,6 +5771,14 @@
     const data = await response.json();
     return data;
   }
+  async function loadArticlesByCategorie(id) {
+    const response = await fetch(`${API_URL}/categories/${id}/articles`);
+    if (!response.ok) {
+      throw new Error(`erruer ${response.status}`);
+    }
+    const data = await response.json();
+    return data.articles;
+  }
 
   // ts/module/ui.ts
   var import_handlebars = __toESM(require_handlebars());
@@ -5785,6 +5793,13 @@
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("categories");
     section.innerHTML = template({ categories });
+    document.querySelectorAll(".categorie-item a").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = Number(a.closest(".categorie-item").dataset.id);
+        loadArticlesByCategorie(id).then((articles) => displayArticle(articles));
+      });
+    });
   }
 
   // ts/module/categorieloader.ts
@@ -5798,7 +5813,6 @@
   }
 
   // ts/main.ts
-  new EventSource("/esbuild").addEventListener("change", () => location.reload());
   console.log("ss");
   var p = document.querySelector("p");
   if (p)
