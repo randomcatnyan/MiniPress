@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/article.dart';
 import '../services/api_service.dart';
 
@@ -37,12 +39,12 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
     }
   }
 
-  // Formatage de la date en jour/mois/année (ex: "11/06/2026")
+  // Formatage de la date (ex: "11 Juin 2026")
   String _formatDate(String? dateStr) {
     if (dateStr == null || dateStr.isEmpty) return '';
     try {
       final dt = DateTime.parse(dateStr);
-      return DateFormat('dd/MM/yyyy', 'fr_FR').format(dt);
+      return DateFormat('d MMMM yyyy', 'fr_FR').format(dt);
     } catch (_) {
       return dateStr;
     }
@@ -52,7 +54,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.titre), // Titre dans la barre du haut
+        title: Text(widget.titre), // Titre temporaire dans la barre du haut
       ),
       // Le FutureBuilder permet d'afficher différents widgets selon que l'API est en train de charger,
       // a échoué ou a renvoyé les données de l'article.
@@ -68,16 +70,30 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
           // Cas 2 : Erreur de chargement (ex: pas d'internet)
           else if (snapshot.hasError) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Erreur: ${snapshot.error}'),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () => setState(() => _load()), // Bouton pour recommencer le chargement
-                    child: const Text('Réessayer'),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.cloud_off_rounded, size: 64, color: Color(0xFF94A3B8)),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Erreur: ${snapshot.error}',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.outfit(color: const Color(0xFF64748B)),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: () => setState(() => _load()), // Bouton pour recommencer le chargement
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Réessayer'),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }
@@ -85,81 +101,216 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
           else if (snapshot.hasData) {
             final article = snapshot.data!;
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Affiche l'image d'illustration si elle existe
+                  // 1. Image d'illustration de l'article (utilisant cached_network_image)
                   if (article.imageUrl != null && article.imageUrl!.isNotEmpty) ...[
-                    Image.network(
-                      article.imageUrl!,
+                    CachedNetworkImage(
+                      imageUrl: article.imageUrl!,
                       width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover, // Adapte l'image au conteneur
-                      errorBuilder: (context, error, stackTrace) => const SizedBox(), // Cache l'image en cas d'erreur de chargement
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  // Titre de l'article
-                  Text(
-                    article.titre,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  // Date de publication
-                  Text(
-                    'Publié le: ${_formatDate(article.cree)}',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  // Auteur de l'article (cliquable pour filtrer)
-                  if (article.auteurNom != null) ...[
-                    const SizedBox(height: 4),
-                    GestureDetector(
-                      onTap: () {
-                        // Retourne à l'écran d'accueil en lui transmettant le nom de l'auteur sélectionné
-                        Navigator.of(context).pop(article.auteurNom!);
-                      },
-                      child: Text(
-                        'Auteur: ${article.auteurNom!}',
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
+                      height: 240,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        height: 240,
+                        color: const Color(0xFFF1F5F9), // slate-100
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        height: 240,
+                        color: const Color(0xFFF1F5F9), // slate-100
+                        child: const Center(
+                          child: Icon(
+                            Icons.broken_image_outlined,
+                            color: Color(0xFF94A3B8), // slate-400
+                            size: 48,
+                          ),
                         ),
                       ),
                     ),
                   ],
-                  // Nom de la catégorie
-                  if (article.categorieNom != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      'Catégorie: ${article.categorieNom!}',
-                      style: const TextStyle(color: Colors.grey),
+
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 2. Badge de catégorie
+                        if (article.categorieNom != null) ...[
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF06B6D4).withOpacity(0.08), // Cyan très doux
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: const Color(0xFF06B6D4).withOpacity(0.2),
+                                width: 1,
+                              ),
+                            ),
+                            child: Text(
+                              article.categorieNom!.toUpperCase(),
+                              style: GoogleFonts.outfit(
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF0891B2), // Cyan foncé
+                                letterSpacing: 1.0,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+
+                        // 3. Titre de l'article (Typography Playfair Display pour le côté éditorial/presse)
+                        Text(
+                          article.titre,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF0F172A), // slate-900
+                            height: 1.25,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // 4. Fiche d'informations de l'auteur et de la date (Avatar + Détails alignés)
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF8FAFC), // slate-50
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: const Color(0xFFE2E8F0)), // slate-200
+                          ),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: const Color(0xFF4F46E5).withOpacity(0.1),
+                                radius: 20,
+                                child: Text(
+                                  article.auteurNom != null && article.auteurNom!.isNotEmpty
+                                      ? article.auteurNom![0].toUpperCase()
+                                      : 'M',
+                                  style: GoogleFonts.outfit(
+                                    color: const Color(0xFF4F46E5),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Rédacteur',
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 11,
+                                        color: const Color(0xFF64748B), // slate-500
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (article.auteurNom != null) {
+                                          Navigator.of(context).pop(article.auteurNom!);
+                                        }
+                                      },
+                                      child: MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: Text(
+                                          article.auteurNom ?? 'Auteur anonyme',
+                                          style: GoogleFonts.outfit(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFF4F46E5), // Lien bleu indigo cliquable
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (article.cree != null) ...[
+                                Container(
+                                  height: 32,
+                                  width: 1,
+                                  color: const Color(0xFFE2E8F0),
+                                ),
+                                const SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Publié le',
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 11,
+                                        color: const Color(0xFF64748B),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      _formatDate(article.cree),
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFF334155), // slate-700
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Divider(color: Color(0xFFE2E8F0)),
+                        const SizedBox(height: 16),
+
+                        // 5. Résumé de l'article (Chapeau / En-tête de contenu avec une bordure de citation)
+                        if (article.resume != null && article.resume!.isNotEmpty) ...[
+                          Container(
+                            padding: const EdgeInsets.only(left: 16, top: 4, bottom: 4),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                left: BorderSide(
+                                  color: Color(0xFF4F46E5), // Bordure gauche Indigo
+                                  width: 4.0,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              article.resume!,
+                              style: GoogleFonts.outfit(
+                                fontSize: 16,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF334155), // slate-700
+                                height: 1.45,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+
+                        // 6. Contenu complet de l'article
+                        if (article.contenu != null && article.contenu!.isNotEmpty)
+                          Text(
+                            article.contenu!,
+                            style: GoogleFonts.outfit(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF334155), // slate-700
+                              height: 1.6,
+                            ),
+                          ),
+                      ],
                     ),
-                  ],
-                  const SizedBox(height: 16),
-                  const Divider(), // Ligne de séparation horizontale
-                  const SizedBox(height: 16),
-                  // Résumé de l'article (en gras et italique)
-                  if (article.resume != null && article.resume!.isNotEmpty) ...[
-                    Text(
-                      article.resume!,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  // Contenu complet de l'article
-                  if (article.contenu != null && article.contenu!.isNotEmpty)
-                    Text(
-                      article.contenu!,
-                      style: const TextStyle(fontSize: 14),
-                    ),
+                  ),
                 ],
               ),
             );
