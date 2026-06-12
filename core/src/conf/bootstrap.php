@@ -32,7 +32,7 @@ $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
 
 
-$routesFile = $routesFile;
+$routesFile = $routesFile ?? 'routes.php';
 $app = (require __DIR__ . '/' . $routesFile)($app);
 
 return $app;

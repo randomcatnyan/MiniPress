@@ -24,26 +24,6 @@
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
-  var __async = (__this, __arguments, generator) => {
-    return new Promise((resolve, reject) => {
-      var fulfilled = (value) => {
-        try {
-          step(generator.next(value));
-        } catch (e) {
-          reject(e);
-        }
-      };
-      var rejected = (value) => {
-        try {
-          step(generator.throw(value));
-        } catch (e) {
-          reject(e);
-        }
-      };
-      var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
-      step((generator = generator.apply(__this, __arguments)).next());
-    });
-  };
 
   // node_modules/handlebars/dist/cjs/handlebars/utils.js
   var require_utils = __commonJS({
@@ -1510,7 +1490,7 @@
               }
               return token;
             }
-            var symbol, preErrorSymbol, state, action, a, r, yyval = {}, p, len, newState, expected;
+            var symbol, preErrorSymbol, state, action, a, r, yyval = {}, p2, len, newState, expected;
             while (true) {
               state = stack[stack.length - 1];
               if (this.defaultActions[state]) {
@@ -1525,9 +1505,9 @@
                 var errStr = "";
                 if (!recovering) {
                   expected = [];
-                  for (p in table[state])
-                    if (this.terminals_[p] && p > 2) {
-                      expected.push("'" + this.terminals_[p] + "'");
+                  for (p2 in table[state])
+                    if (this.terminals_[p2] && p2 > 2) {
+                      expected.push("'" + this.terminals_[p2] + "'");
                     }
                   if (this.lexer.showPosition) {
                     errStr = "Parse error on line " + (yylineno + 1) + ":\n" + this.lexer.showPosition() + "\nExpecting " + expected.join(", ") + ", got '" + (this.terminals_[symbol] || symbol) + "'";
@@ -3778,13 +3758,13 @@
       function randomIntInRange(low, high) {
         return Math.round(low + Math.random() * (high - low));
       }
-      function doQuickSort(ary, comparator, p, r) {
-        if (p < r) {
-          var pivotIndex = randomIntInRange(p, r);
-          var i = p - 1;
+      function doQuickSort(ary, comparator, p2, r) {
+        if (p2 < r) {
+          var pivotIndex = randomIntInRange(p2, r);
+          var i = p2 - 1;
           swap(ary, pivotIndex, r);
           var pivot = ary[r];
-          for (var j = p; j < r; j++) {
+          for (var j = p2; j < r; j++) {
             if (comparator(ary[j], pivot) <= 0) {
               i += 1;
               swap(ary, i, j);
@@ -3792,7 +3772,7 @@
           }
           swap(ary, i + 1, j);
           var q = i + 1;
-          doQuickSort(ary, comparator, p, q - 1);
+          doQuickSort(ary, comparator, p2, q - 1);
           doQuickSort(ary, comparator, q + 1, r);
         }
       }
@@ -4846,11 +4826,11 @@
           var revision = _base.COMPILER_REVISION, versions = _base.REVISION_CHANGES[revision];
           return [revision, versions];
         },
-        appendToBuffer: function appendToBuffer(source, location, explicit) {
+        appendToBuffer: function appendToBuffer(source, location2, explicit) {
           if (!_utils.isArray(source)) {
             source = [source];
           }
-          source = this.source.wrap(source, location);
+          source = this.source.wrap(source, location2);
           if (this.environment.isSimple) {
             return ["return ", source, ";"];
           } else if (explicit) {
@@ -5783,15 +5763,13 @@
   var API_URL = "http://localhost:8083/api";
 
   // ts/module/articleloader.ts
-  function loadArticles() {
-    return __async(this, null, function* () {
-      const response = yield fetch(`${API_URL}/articles`);
-      if (!response.ok) {
-        throw new Error(`Erreur ${response.status}`);
-      }
-      const data = yield response.json();
-      return data;
-    });
+  async function loadArticles() {
+    const response = await fetch(`${API_URL}/articles`);
+    if (!response.ok) {
+      throw new Error(`Erreur ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
   }
 
   // ts/module/ui.ts
@@ -5804,6 +5782,11 @@
   }
 
   // ts/main.ts
+  new EventSource("/esbuild").addEventListener("change", () => location.reload());
+  console.log("ss");
+  var p = document.querySelector("p");
+  if (p)
+    p.textContent = "aadsdda";
   document.addEventListener("DOMContentLoaded", () => {
     loadArticles().then((articles) => displayArticle(articles));
   });
