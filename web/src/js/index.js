@@ -5780,6 +5780,22 @@
     const section = document.getElementById("Article");
     section.innerHTML = template({ articles });
   }
+  function displayCategories(categories) {
+    const templateScript = document.getElementById("cate");
+    const template = import_handlebars.default.compile(templateScript.innerHTML);
+    const section = document.getElementById("les_categories");
+    section.innerHTML = template({ categories });
+  }
+
+  // ts/module/categorieloader.ts
+  async function loadCategories() {
+    const response = await fetch(`${API_URL}/categories`);
+    if (!response.ok) {
+      throw new Error(`erreur pour charger: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  }
 
   // ts/main.ts
   new EventSource("/esbuild").addEventListener("change", () => location.reload());
@@ -5787,8 +5803,9 @@
   var p = document.querySelector("p");
   if (p)
     p.textContent = "aadsdda";
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
     loadArticles().then((articles) => displayArticle(articles));
+    loadCategories().then((categories) => displayCategories(categories));
   });
 })();
 //# sourceMappingURL=index.js.map
