@@ -5783,7 +5783,7 @@
   function displayCategories(categories) {
     const templateScript = document.getElementById("cate");
     const template = import_handlebars.default.compile(templateScript.innerHTML);
-    const section = document.getElementById("les_categories");
+    const section = document.getElementById("cate");
     section.innerHTML = template({ categories });
   }
 
