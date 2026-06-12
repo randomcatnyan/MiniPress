@@ -13,6 +13,6 @@ export function displayCategories(categories: Categorie[]): void {
     const templateScript = document.getElementById('cate') as HTMLElement;
     const template = Handlebars.compile(templateScript.innerHTML);
 
-    const section = document.getElementById('cate') as HTMLElement;
+    const section = document.getElementById('categories') as HTMLElement;
     section.innerHTML = template({ categories: categories });
 }
