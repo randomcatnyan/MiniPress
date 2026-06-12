@@ -4,3 +4,9 @@ export interface Article {
     auteur: string;
     lien: string;
 }
+
+export interface Categorie {
+    id:number;
+    titre:string;
+    description?:string;
+}

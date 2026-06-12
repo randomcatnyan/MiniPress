@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8" />
@@ -12,7 +12,6 @@
 
 <body>
     <section id="Article"></section>
-
     <script id="ArticleTemplate" type="text/x-handlebars-template">
     {{#each articles}}
         <article>
@@ -21,6 +20,19 @@
         </article>
     {{/each}}
 </script>
+
+    <h3>cate</h3>
+    <section id="les_categories"></section>
+    <script id="cate" type="text/x-handlebars-template">
+        {{#each categories}}
+            <li class="categorie-item" data-id="{{id}}">
+                <strong>{{titre}}</strong>
+                {{#if description}}
+                    <p >{{description}}</p>
+                {{/if}}
+            </li>
+        {{/each}}
+    </script>
 </body>
 
 </html>
