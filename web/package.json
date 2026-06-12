@@ -5,8 +5,8 @@
     "marked": "^12.0.0"
   },
   "scripts": {
-    "build": "esbuild ts/index.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js",
-    "watch": "esbuild ts/index.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js --watch"
+    "build": "esbuild ts/main.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js",
+    "watch": "esbuild ts/main.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js --watch"
 
   },
   "devDependencies": {

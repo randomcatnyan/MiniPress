@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": [],
-  "sourcesContent": [],
-  "mappings": "",
+  "sources": ["../../ts/main.ts"],
+  "sourcesContent": ["\r\n(async () => {\r\n    try {\r\n        // les await sont top level dans les modules\r\n        const c = await fetch('.');\r\n        console.log(c);\r\n\r\n    } catch (err) {\r\n        console.error('Erreur : ' + err);\r\n    }\r\n\r\n})()"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AACA,OAAC,MAAY;AACT,YAAI;AAEA,gBAAM,IAAI,MAAM,MAAM,GAAG;AACzB,kBAAQ,IAAI,CAAC;AAAA,QAEjB,SAAS,KAAP;AACE,kBAAQ,MAAM,cAAc,GAAG;AAAA,QACnC;AAAA,MAEJ,IAAG;AAAA;AAAA;",
   "names": []
 }
