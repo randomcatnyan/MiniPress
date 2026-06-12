@@ -1,12 +1,6 @@
+import { loadArticles } from './articleloader';
+import { displayArticle } from './ui';
 
-(async () => {
-    try {
-        // les await sont top level dans les modules
-        const c = await fetch('.');
-        console.log(c);
-
-    } catch (err) {
-        console.error('Erreur : ' + err);
-    }
-
-})()
+document.addEventListener('DOMContentLoaded', () => {
+    loadArticles().then((articles: any) => displayArticle(articles))
+});
