@@ -4,9 +4,8 @@ import { loadCategories } from "./module/categorieloader";
 
 // https://esbuild.github.io/api/#live-reload
 // cette ligne sert à avoir un live reload pendant le dev
-// new EventSource("/esbuild").addEventListener("change", () => location.reload());
-
-console.log("ss");
+const hotReload = new EventSource("/esbuild") ?? null;
+hotReload?.addEventListener("change", () => location.reload());
 
 let p = document.querySelector("p");
 if (p) p.textContent = "aadsdda";
