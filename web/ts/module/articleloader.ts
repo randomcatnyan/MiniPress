@@ -9,3 +9,14 @@ export async function loadArticles(): Promise<Article[]> {
     const data = await response.json();
     return data;
 }
+
+export async function loadArticleComplet(lien: string): Promise<any>{
+    const base = API_URL.replace('/api', '');   
+    const reponse = await fetch(`${base}${lien}`);
+    if (!reponse.ok) {
+        throw new Error(`Erreur ${reponse.status}`);
+    }
+    const data = await reponse.json();
+    return data;
+}
+

@@ -4826,11 +4826,11 @@
           var revision = _base.COMPILER_REVISION, versions = _base.REVISION_CHANGES[revision];
           return [revision, versions];
         },
-        appendToBuffer: function appendToBuffer(source, location2, explicit) {
+        appendToBuffer: function appendToBuffer(source, location, explicit) {
           if (!_utils.isArray(source)) {
             source = [source];
           }
-          source = this.source.wrap(source, location2);
+          source = this.source.wrap(source, location);
           if (this.environment.isSimple) {
             return ["return ", source, ";"];
           } else if (explicit) {
@@ -5771,6 +5771,15 @@
     const data = await response.json();
     return data;
   }
+  async function loadArticleComplet(lien) {
+    const base = API_URL.replace("/api", "");
+    const reponse = await fetch(`${base}${lien}`);
+    if (!reponse.ok) {
+      throw new Error(`Erreur ${reponse.status}`);
+    }
+    const data = await reponse.json();
+    return data;
+  }
 
   // ts/module/ui.ts
   var import_handlebars = __toESM(require_handlebars());
@@ -5779,12 +5788,35 @@
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("Article");
     section.innerHTML = template({ articles });
+    section.addEventListener("click", (e) => {
+      const cible = e.target.closest("[data-lien]");
+      if (!cible)
+        return;
+      e.preventDefault();
+      const lien = cible.dataset.lien;
+      loadArticleComplet(lien).then((article) => {
+        console.log("article complet re\xE7u :", article);
+        displayArticleComplet(article);
+      }).catch((err) => console.error("Erreur :", err.message));
+    });
   }
   function displayCategories(categories) {
     const templateScript = document.getElementById("cate");
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("categories");
     section.innerHTML = template({ categories });
+  }
+  function displayArticleComplet(article) {
+    const templateScript = document.getElementById("ArticleCompletTemplate");
+    const template = import_handlebars.default.compile(templateScript.innerHTML);
+    const section = document.getElementById("Article");
+    section.innerHTML = template({
+      titre: article.titre,
+      cree: article.cree,
+      auteur: article.auteur.nom,
+      resume: article.resume ?? "",
+      contenu: article.contenu ?? ""
+    });
   }
 
   // ts/module/categorieloader.ts
@@ -5798,7 +5830,6 @@
   }
 
   // ts/main.ts
-  new EventSource("/esbuild").addEventListener("change", () => location.reload());
   console.log("ss");
   var p = document.querySelector("p");
   if (p)

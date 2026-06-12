@@ -10,3 +10,12 @@ export interface Categorie {
     titre:string;
     description?:string;
 }
+
+export interface ArticleComplet{
+    id: number;
+    titre: string;
+    resume: string;
+    contenu: string;
+    cree: string;
+    auteur: { nom: string };
+}
