@@ -5,11 +5,10 @@
     "marked": "^12.0.0"
   },
   "scripts": {
-    "build": "esbuild ts/main.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js",
-    "watch": "esbuild ts/main.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js --watch"
-
+    "minipress:build": "esbuild ts/main.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js",
+    "minipress:run": "esbuild ts/main.ts --bundle --sourcemap --target=es2015 --outfile=src/js/index.js --watch --servedir=src"
   },
   "devDependencies": {
     "@types/handlebars": "^4.0.40"
   }
-} 
+}

@@ -1,5 +1,5 @@
-import { API_URL} from './config';
-import { Article } from './types';
+import { API_URL } from './config.ts';
+import { Article } from './types.ts';
 
 export async function loadArticles(): Promise<Article[]> {
     const response = await fetch(`${API_URL}/articles`);
