@@ -16,7 +16,8 @@ services:
   adminer:
     image: adminer:5.4.2
     ports:
-      - "8082:8080"
+      - "30000:8080"
+    command: php -S 0.0.0.0:8080 -t /var/www/html
     depends_on:
       - sql
     networks:
@@ -25,7 +26,7 @@ services:
   web:
     image: nginx:1.31.1
     ports:
-      - "8080:80"
+      - "30001:80"
     volumes:
       - "./web/src:/usr/share/nginx/html:ro"
   
@@ -34,7 +35,7 @@ services:
       context: core
       dockerfile: ./core.Dockerfile
     ports:
-      - "8084:80"
+      - "30002:80"
     volumes:
       - "./core:/app"
     depends_on:
@@ -49,7 +50,7 @@ services:
       context: core
       dockerfile: ./core.Dockerfile
     ports:
-      - "8083:80"
+      - "30003:80"
     volumes:
       - "./core:/app"
     depends_on:
