@@ -21,7 +21,6 @@
     <h3>Liste des articles</h3>
     <input type="text" id="recherche" placeholder="filtrage par titre">
     <section id="Article"></section>
-    <section id="Article"></section>
     <script id="ArticleTemplate" type="text/x-handlebars-template">
       {{#each articles}}
           <article>
@@ -29,14 +28,15 @@
               <p>{{cree}} — par <span class="auteurName" data-id="{{auteur.id}}">{{auteur.nom}}</span></p>
           </article>
       {{/each}}
-</script>
+    </script>
     <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
-    <article>
-        <h2>{{titre}}</h2>
-        <p>{{cree}} — par {{auteur}}</p>
-        <div class="resume">{{{resume}}}</div>
-        <div class="contenu">{{{contenu}}}</div>
-  </script>
+        <article>
+            <h2>{{titre}}</h2>
+            <p>{{cree}} — par {{auteur}}</p>
+            <div class="resume">{{{resume}}}</div>
+            <div class="contenu">{{{contenu}}}</div>
+        </article>
+    </script>
 
     <h3>liste des categories</h3>
     <section id="categories"></section>
