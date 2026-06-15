@@ -75,3 +75,24 @@ export function tri(): void {
         });
     }
 }
+
+export function filtre(): void {
+    const rech = document.getElementById('recherche') as HTMLInputElement | null;
+    if (rech) {
+        rech.addEventListener('input', () => {
+            const mot = rech.value.trim().toLowerCase();
+            if (mot === "") {
+                displayArticle(articlesActuels);
+                return;
+            }
+            const filtre = articlesActuels.filter(article => {
+                const titre = article.titre.toLowerCase().includes(mot);
+                return titre;
+            });
+            const templateScript = document.getElementById('ArticleTemplate') as HTMLElement;
+            const template = Handlebars.compile(templateScript.innerHTML);
+            const section = document.getElementById('Article') as HTMLElement;
+            section.innerHTML = template({ articles: filtre });
+        });
+    }
+}
