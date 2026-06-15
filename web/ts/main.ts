@@ -8,5 +8,21 @@ import { Article, Categorie } from "./module/types";
 const hotReload = new EventSource("/esbuild") ?? null;
 hotReload?.addEventListener("change", () => location.reload());
 
-loadArticles().then((articles: Article[]) => displayArticle(articles));
-loadCategories().then((categories: Categorie[]) => displayCategories(categories));
+document.addEventListener("DOMContentLoaded", ()=>{
+    let tousArticles: Article [] = [];
+    loadArticles().then((articles: Article[]) =>{
+        tousArticles = articles;
+        displayArticle(articles);
+    });
+
+    loadCategories().then((categories: Categorie[]) => displayCategories(categories));
+
+    const recherche = document.getElementById("recherche") as HTMLInputElement;
+    recherche.addEventListener("input", ()=>{
+        const titre = recherche.value.toLowerCase();
+        const filtres = tousArticles.filter((a) =>
+            a.titre.toLowerCase().includes(titre)
+        );
+        displayArticle(filtres)
+    });
+});
