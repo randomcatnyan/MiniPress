@@ -9,6 +9,7 @@ import { Article, Categorie } from "./module/types";
 
 loadArticles().then((articles: Article[]) => displayArticle(articles));
 loadCategories().then((categories: Categorie[]) => displayCategories(categories));
+tri();
 
 // mis ça ici le temps de le faire
 for (const auteurName of document.querySelectorAll(".auteurName")) {
