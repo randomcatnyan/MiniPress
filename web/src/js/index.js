@@ -4826,11 +4826,11 @@
           var revision = _base.COMPILER_REVISION, versions = _base.REVISION_CHANGES[revision];
           return [revision, versions];
         },
-        appendToBuffer: function appendToBuffer(source, location, explicit) {
+        appendToBuffer: function appendToBuffer(source, location2, explicit) {
           if (!_utils.isArray(source)) {
             source = [source];
           }
-          source = this.source.wrap(source, location);
+          source = this.source.wrap(source, location2);
           if (this.environment.isSimple) {
             return ["return ", source, ";"];
           } else if (explicit) {
@@ -5760,7 +5760,7 @@
   });
 
   // ts/module/config.ts
-  var API_URL = "http://localhost:8083/api";
+  var API_URL = "http://docketu.iutnc.univ-lorraine.fr:30003/api";
 
   // ts/module/articleloader.ts
   async function loadArticles() {
@@ -5780,10 +5780,20 @@
     const data = await reponse.json();
     return data;
   }
+  async function loadArticlesByCategorie(id) {
+    const response = await fetch(`${API_URL}/categories/${id}/articles`);
+    if (!response.ok) {
+      throw new Error(`Erreur ${response.status}`);
+    }
+    const data = await response.json();
+    return data.articles;
+  }
 
   // ts/module/ui.ts
   var import_handlebars = __toESM(require_handlebars());
+  var articlesActuels = [];
   function displayArticle(articles) {
+    articlesActuels = articles;
     const templateScript = document.getElementById("ArticleTemplate");
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("Article");
@@ -5794,10 +5804,7 @@
         return;
       e.preventDefault();
       const lien = cible.dataset.lien;
-      loadArticleComplet(lien).then((article) => {
-        console.log("article complet re\xE7u :", article);
-        displayArticleComplet(article);
-      }).catch((err) => console.error("Erreur :", err.message));
+      loadArticleComplet(lien).then(displayArticleComplet);
     });
   }
   function displayCategories(categories) {
@@ -5805,6 +5812,14 @@
     const template = import_handlebars.default.compile(templateScript.innerHTML);
     const section = document.getElementById("categories");
     section.innerHTML = template({ categories });
+    section.addEventListener("click", (e) => {
+      const cible = e.target.closest(".categorie-item");
+      if (!cible)
+        return;
+      e.preventDefault();
+      const id = Number(cible.dataset.id);
+      loadArticlesByCategorie(id).then(displayArticle);
+    });
   }
   function displayArticleComplet(article) {
     const templateScript = document.getElementById("ArticleCompletTemplate");
@@ -5818,6 +5833,35 @@
       contenu: article.contenu ?? ""
     });
   }
+  function tri() {
+    const selectTri = document.getElementById("tri-date");
+    if (selectTri) {
+      selectTri.addEventListener("change", () => {
+        const ordre = selectTri.value.trim().toLowerCase();
+        let articlesTries = [...articlesActuels];
+        if (articlesTries.length === 0)
+          return;
+        if (ordre === "asc") {
+          articlesTries.sort((a, b) => {
+            if (a.cree < b.cree)
+              return -1;
+            if (a.cree > b.cree)
+              return 1;
+            return 0;
+          });
+        } else if (ordre === "desc") {
+          articlesTries.sort((a, b) => {
+            if (a.cree > b.cree)
+              return -1;
+            if (a.cree < b.cree)
+              return 1;
+            return 0;
+          });
+        }
+        displayArticle(articlesTries);
+      });
+    }
+  }
 
   // ts/module/categorieloader.ts
   async function loadCategories() {
@@ -5830,13 +5874,15 @@
   }
 
   // ts/main.ts
-  console.log("ss");
+  var hotReload = new EventSource("/esbuild") ?? null;
+  hotReload?.addEventListener("change", () => location.reload());
   var p = document.querySelector("p");
   if (p)
     p.textContent = "aadsdda";
   document.addEventListener("DOMContentLoaded", async () => {
     loadArticles().then((articles) => displayArticle(articles));
     loadCategories().then((categories) => displayCategories(categories));
+    tri();
   });
 })();
 //# sourceMappingURL=index.js.map

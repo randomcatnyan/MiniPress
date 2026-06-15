@@ -1,9 +1,10 @@
 import Handlebars from 'handlebars';
 import { Article, Categorie, ArticleComplet } from './types';
-import { loadArticleComplet } from './articleloader';
+import { loadArticleComplet, loadArticlesByCategorie } from './articleloader';
 
-
+    let articlesActuels: Article[] = [];
 export function displayArticle(articles: Article[]): void {
+    articlesActuels = articles;
     const templateScript = document.getElementById('ArticleTemplate') as HTMLElement;
     const template = Handlebars.compile(templateScript.innerHTML);
 
@@ -25,6 +26,14 @@ export function displayCategories(categories: Categorie[]): void {
 
     const section = document.getElementById('categories') as HTMLElement;
     section.innerHTML = template({ categories: categories });
+
+    section.addEventListener('click', (e) => {
+        const cible = (e.target as HTMLElement).closest('.categorie-item') as HTMLElement | null;
+        if (!cible) return;
+        e.preventDefault();
+        const id = Number(cible.dataset.id);
+        loadArticlesByCategorie(id).then(displayArticle);
+    });
 }
 
 export function displayArticleComplet(article: ArticleComplet){
@@ -39,4 +48,30 @@ export function displayArticleComplet(article: ArticleComplet){
         resume:  article.resume ?? '',  
         contenu: article.contenu ?? '',  
     });
+}
+
+export function tri(): void {
+    const selectTri = document.getElementById('tri-date') as HTMLSelectElement;
+
+    if (selectTri) {
+        selectTri.addEventListener('change', () => {
+            const ordre = selectTri.value.trim().toLowerCase();
+            let articlesTries = [...articlesActuels];
+            if (articlesTries.length === 0) return;
+            if (ordre === 'asc') {
+                articlesTries.sort((a, b) => {
+                    if (a.cree < b.cree) return -1;
+                    if (a.cree > b.cree) return 1;
+                    return 0;
+                });
+            } else if (ordre === 'desc') {
+                articlesTries.sort((a, b) => {
+                    if (a.cree > b.cree) return -1;
+                    if (a.cree < b.cree) return 1;
+                    return 0;
+                });
+            }
+            displayArticle(articlesTries);
+        });
+    }
 }

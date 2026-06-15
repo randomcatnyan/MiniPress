@@ -20,3 +20,12 @@ export async function loadArticleComplet(lien: string): Promise<any>{
     return data;
 }
 
+export async function loadArticlesByCategorie(id: number): Promise<Article[]> {
+    const response = await fetch(`${API_URL}/categories/${id}/articles`);
+    if (!response.ok) {
+        throw new Error(`Erreur ${response.status}`);
+    }
+    const data = await response.json();
+    return data.articles as Article[]; 
+}
+
