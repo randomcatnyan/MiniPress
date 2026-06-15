@@ -1,7 +1,7 @@
-import { loadArticles } from "./module/articleloader";
-import { displayArticle, displayCategories, tri } from "./module/ui";
-import { loadCategories } from "./module/categorieloader";
-import { Article, Categorie } from "./module/types";
+import * as articleloader from "./module/articleloader";
+import * as ui from "./module/ui";
+import * as categorieloader from "./module/categorieloader";
+import * as types from "./module/types";
 
 // https://esbuild.github.io/api/#live-reload
 // cette ligne sert à avoir un live reload pendant le dev
@@ -9,12 +9,12 @@ import { Article, Categorie } from "./module/types";
 
 document.addEventListener("DOMContentLoaded", ()=>{
     let tousArticles: Article [] = [];
-    loadArticles().then((articles: Article[]) =>{
+    articleloader.loadArticles().then((articles: types.Article[]) =>{
         tousArticles = articles;
-        displayArticle(articles);
+         ui.displayArticle(articles);
     });
 
-    loadCategories().then((categories: Categorie[]) => displayCategories(categories));
+    categorieloader.loadCategories().then((categories: types.Categorie[]) => ui.displayCategories(categories));
 
     const recherche = document.getElementById("recherche") as HTMLInputElement;
     recherche.addEventListener("input", ()=>{
@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 tri();
 
 // mis ça ici le temps de le faire
+// TODO: il faut que ça soit lancé après que les 2 autres au dessus soient résolus
 for (const auteurName of document.querySelectorAll(".auteurName")) {
   if (auteurName instanceof HTMLElement) {
     auteurName.addEventListener("click", e => {
