@@ -1,7 +1,10 @@
 export interface Article {
     titre: string;
     cree: string;
-    auteur: string;
+    auteur: {
+        nom: string;
+        id: number;
+    }
     lien: string;
 }
 
