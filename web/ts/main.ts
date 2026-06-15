@@ -7,26 +7,27 @@ import * as types from "./module/types";
 // cette ligne sert à avoir un live reload pendant le dev
 (new EventSource("/esbuild"))?.addEventListener("change", () => location.reload());
 
-document.addEventListener("DOMContentLoaded", ()=>{
-    let tousArticles: Article [] = [];
-    articleloader.loadArticles().then((articles: types.Article[]) =>{
-        tousArticles = articles;
-         ui.displayArticle(articles);
-    });
+let allArticles: types.Article[] = [];
 
-    categorieloader.loadCategories().then((categories: types.Categorie[]) => ui.displayCategories(categories));
+articleloader.loadArticles()
+  .then((articles: types.Article[]) => {
+    allArticles = articles;
+    ui.displayArticle(articles);
+  });
 
-    const recherche = document.getElementById("recherche") as HTMLInputElement;
-    recherche.addEventListener("input", ()=>{
-        const titre = recherche.value.toLowerCase();
-        const filtres = tousArticles.filter((a) =>
-            a.titre.toLowerCase().includes(titre)
-        );
-        displayArticle(filtres)
-    });
+categorieloader.loadCategories()
+  .then((categories: types.Categorie[]) => ui.displayCategories(categories));
+
+const recherche = document.getElementById("recherche") as HTMLInputElement;
+recherche.addEventListener("input", () => {
+  const titre = recherche.value.toLowerCase();
+  const filtres = allArticles.filter((a) =>
+    a.titre.toLowerCase().includes(titre)
+  );
+  ui.displayArticle(filtres)
 });
 
-tri();
+ui.tri();
 
 // mis ça ici le temps de le faire
 // TODO: il faut que ça soit lancé après que les 2 autres au dessus soient résolus
