@@ -1,41 +1,42 @@
 <!doctype html>
 <html lang="fr">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MiniPress.web</title>
     <link rel="icon" href="image/favicon.png" />
     <link rel="stylesheet" href="css/style.css" />
     <script defer src="js/index.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <h3>Liste des articles</h3>
     <div class="tri-container">
-      <label for="tri-date">trie des articles</label>
-      <select id="tri-date">
-        <option value="desc">vieux au recent</option>
-        <option value="asc">recent au vieux</option>
-      </select>
+        <label for="tri-date">trie des articles</label>
+        <select id="tri-date">
+            <option value="desc">vieux au recent</option>
+            <option value="asc">recent au vieux</option>
+        </select>
     </div>
     <h3>Liste des articles</h3>
     <section id="Article"></section>
     <section id="Article"></section>
     <script id="ArticleTemplate" type="text/x-handlebars-template">
       {{#each articles}}
-        <article>
-          <h3><a href="#" data-lien="{{lien}}">{{titre}}</a></h3>
-          <p>{{cree}} — par {{auteur}}</p>
-        </article>
+          <article>
+              <h3><a href='#' data-lien="{{lien}}">{{titre}}</a></h3>
+              <p>{{cree}} — par <span class="auteurName" data-id="{{auteur.id}}">{{auteur.nom}}</span></p>
+          </article>
       {{/each}}
-    </script>
+</script>
     <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
-      <article>
-          <h2>{{titre}}</h2>
-          <p>{{cree}} — par {{auteur}}</p>
-          <div class="resume">{{{resume}}}</div>
-          <div class="contenu">{{{contenu}}}</div>
-    </script>
+    <article>
+        <h2>{{titre}}</h2>
+        <p>{{cree}} — par {{auteur}}</p>
+        <div class="resume">{{{resume}}}</div>
+        <div class="contenu">{{{contenu}}}</div>
+  </script>
 
     <h3>liste des categories</h3>
     <section id="categories"></section>
@@ -49,5 +50,6 @@
         </li>
       {{/each}}
     </script>
-  </body>
+</body>
+
 </html>

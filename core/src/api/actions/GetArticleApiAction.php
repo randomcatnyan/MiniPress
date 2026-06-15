@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace minipress\core\api\actions;
@@ -22,7 +23,7 @@ class GetArticleApiAction
     {
         $paramSort = $rq->getQueryParams();
         $sort = $paramSort['sort'] ?? null;
-        
+
         try {
             $articles = $this->articleManagementService->getArticleSorted($sort);
         } catch (\Exception $e) {
@@ -33,18 +34,21 @@ class GetArticleApiAction
 
 
         $tab = [];
-            foreach ($articles as $article) {
-                if ((int)$article['est_publie'] !== 1) {
-                continue; 
+        foreach ($articles as $article) {
+            if ((int)$article['est_publie'] !== 1) {
+                continue;
             }
-                $tab[] = [
-                    'titre' => $article['titre'],
-                    'cree' => $article['cree'],
-                    'auteur' => $article['auteur']['nom'] ?? null,
-                    'lien' => $routeParser->urlFor('api_article_complet', ['id' => $article['id']])
-                    
-                ];
-            }
+            $tab[] = [
+                'titre' => $article['titre'],
+                'cree' => $article['cree'],
+                'auteur' => [
+                    'nom' => $article['auteur']['nom'] ?? null,
+                    'id' => $article['auteur_id'] ?? null
+                ],
+                'lien' => $routeParser->urlFor('api_article_complet', ['id' => $article['id']])
+
+            ];
+        }
 
         $rs->getBody()->write(json_encode($tab));
         return $rs->withHeader('Content-Type', 'application/json');
