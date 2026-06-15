@@ -12,6 +12,7 @@ loadCategories().then((categories: Categorie[]) => displayCategories(categories)
 tri();
 filtre();
 
+
 // mis ça ici le temps de le faire
 for (const auteurName of document.querySelectorAll(".auteurName")) {
   if (auteurName instanceof HTMLElement) {
