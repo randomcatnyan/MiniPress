@@ -5862,6 +5862,26 @@
       });
     }
   }
+  function filtre() {
+    const rech = document.getElementById("recherche");
+    if (rech) {
+      rech.addEventListener("input", () => {
+        const mot = rech.value.trim().toLowerCase();
+        if (mot === "") {
+          displayArticle(articlesActuels);
+          return;
+        }
+        const filtre2 = articlesActuels.filter((article) => {
+          const titre = article.titre.toLowerCase().includes(mot);
+          return titre;
+        });
+        const templateScript = document.getElementById("ArticleTemplate");
+        const template = import_handlebars.default.compile(templateScript.innerHTML);
+        const section = document.getElementById("Article");
+        section.innerHTML = template({ articles: filtre2 });
+      });
+    }
+  }
 
   // ts/module/categorieloader.ts
   async function loadCategories() {
@@ -5875,23 +5895,10 @@
 
   // ts/main.ts
   new EventSource("/esbuild")?.addEventListener("change", () => location.reload());
-  document.addEventListener("DOMContentLoaded", () => {
-    let tousArticles = [];
-    loadArticles().then((articles) => {
-      tousArticles = articles;
-      displayArticle(articles);
-    });
-    loadCategories().then((categories) => displayCategories(categories));
-    const recherche = document.getElementById("recherche");
-    recherche.addEventListener("input", () => {
-      const titre = recherche.value.toLowerCase();
-      const filtres = tousArticles.filter(
-        (a) => a.titre.toLowerCase().includes(titre)
-      );
-      displayArticle(filtres);
-    });
-  });
+  loadArticles().then((articles) => displayArticle(articles));
+  loadCategories().then((categories) => displayCategories(categories));
   tri();
+  filtre();
   for (const auteurName of document.querySelectorAll(".auteurName")) {
     if (auteurName instanceof HTMLElement) {
       auteurName.addEventListener("click", (e) => {
