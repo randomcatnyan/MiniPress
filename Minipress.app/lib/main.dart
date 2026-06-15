@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,10 +9,10 @@ import 'screens/home_screen.dart';
 void main() async {
   // S'assure que Flutter est bien initialisé avant de lancer l'application
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialise le formatage des dates en français (ex: "11 juin 2026")
   await initializeDateFormatting('fr_FR', null);
-  
+
   // Rend la barre de statut du téléphone transparente pour faire plus joli
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -20,7 +21,7 @@ void main() async {
       statusBarBrightness: Brightness.light,
     ),
   );
-  
+
   // Lance le widget principal de notre application
   runApp(const MiniPressApp());
 }
@@ -34,12 +35,15 @@ class MiniPressApp extends StatelessWidget {
     // Thème moderne avec palette indigo, ardoise et cyan
     final Color primaryColor = const Color(0xFF4F46E5); // Indigo moderne
     final Color secondaryColor = const Color(0xFF06B6D4); // Cyan vibrant
-    final Color scaffoldBgColor = const Color(0xFFF8FAFC); // Ardoise très clair (slate-50)
-    final Color textDarkColor = const Color(0xFF0F172A); // Ardoise très sombre (slate-900)
+    final Color scaffoldBgColor =
+        const Color(0xFFF8FAFC); // Ardoise très clair (slate-50)
+    final Color textDarkColor =
+        const Color(0xFF0F172A); // Ardoise très sombre (slate-900)
 
     return MaterialApp(
       title: 'MiniPress', // Le titre de l'application
-      debugShowCheckedModeBanner: false, // Enlève la petite étiquette rouge "Debug" en haut à droite
+      debugShowCheckedModeBanner:
+          false, // Enlève la petite étiquette rouge "Debug" en haut à droite
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.light(
@@ -85,7 +89,8 @@ class MiniPressApp extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(
-              color: const Color(0xFFE2E8F0), // Bordure fine ardoise clair (slate-200)
+              color: const Color(
+                  0xFFE2E8F0), // Bordure fine ardoise clair (slate-200)
               width: 1,
             ),
           ),
@@ -124,7 +129,8 @@ class MiniPressApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(color: const Color(0xFFE2E8F0)),
