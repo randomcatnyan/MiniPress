@@ -32,21 +32,32 @@ ui.tri();
 ui.filtre();
 
 Promise.allSettled([categoriesLoad, articlesLoad]).then(() => {
-  for (const auteurName of document.querySelectorAll(".auteurName")) {
-    if (auteurName instanceof HTMLElement) {
-      auteurName.addEventListener("click", e => {
-        const url = `${config.API_URL}/auteurs/${auteurName.dataset.id}/articles`;
-        fetch(url)
-          .then(r => r.json())
-          .then(r => {
-            const auteurDetails = document.createElement("p").appendChild(document.createTextNode(r.toString()));
-            auteurName.parentElement?.parentElement?.appendChild(auteurDetails);
-          })
-          .catch(err => {
-            console.error("Erreur : " + err);
+  for (const auteurName of document.querySelectorAll(".auteurName") as unknown as HTMLElement[]) {
+    auteurName.addEventListener("click", () => {
+      const url = `${config.API_URL}/auteurs/${auteurName.dataset.id}/articles`;
+      fetch(url)
+        .then(r => r.json())
+        .then(r => {
+          const auteurDetails = document.createElement("ul")
+          Object.values(r.articles).forEach(article => {
+            if (isArticle(article)) {
+              let li = document.createElement("li");
+              li.textContent = `${article.titre} (rajouté le ${article.cree})`;
+              auteurDetails.appendChild(li);
+            }
           });
-      });
-    }
+          auteurName.parentElement?.parentElement?.appendChild(auteurDetails);
+        })
+        .catch(err => {
+          console.error("Erreur : " + err);
+        });
+    });
   }
 }
 )
+
+// https://stackoverflow.com/questions/71624824/what-does-the-typescript-asserts-operator-do
+// https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
+function isArticle(article: any): article is types.Article {
+  return true; // TODO
+}
