@@ -14,8 +14,8 @@
       <label for="tri-date">trie des articles</label>
       <br>
       <select id="tri-date">
-        <option value="desc">vieux au recent</option>
-        <option value="asc">recent au vieux</option>
+        <option value="desc">recent au vieux</option>
+        <option value="asc">vieux au recent</option>
       </select>
     </div>
     <div class="recherche">
@@ -48,7 +48,7 @@
     <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
         <article>
             <h2>{{titre}}</h2>
-            <p>{{cree}} — par {{auteur}}</p>
+            <span class="auteurName" data-id="{{auteur_id}}">{{auteur}}</span>
             <div class="resume">{{{resume}}}</div>
             <div class="contenu">{{{contenu}}}</div>
         </article>

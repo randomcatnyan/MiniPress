@@ -4826,11 +4826,11 @@
           var revision = _base.COMPILER_REVISION, versions = _base.REVISION_CHANGES[revision];
           return [revision, versions];
         },
-        appendToBuffer: function appendToBuffer(source, location2, explicit) {
+        appendToBuffer: function appendToBuffer(source, location, explicit) {
           if (!_utils.isArray(source)) {
             source = [source];
           }
-          source = this.source.wrap(source, location2);
+          source = this.source.wrap(source, location);
           if (this.environment.isSimple) {
             return ["return ", source, ";"];
           } else if (explicit) {
@@ -5788,6 +5788,14 @@
     const data = await response.json();
     return data.articles;
   }
+  async function loadArticlesByAuteur(id) {
+    const response = await fetch(`${API_URL}/auteurs/${id}/articles`);
+    if (!response.ok) {
+      throw new Error(`erreur: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.articles ? data.articles : data;
+  }
 
   // ts/module/ui.ts
   var import_handlebars = __toESM(require_handlebars());
@@ -5799,6 +5807,14 @@
     const section = document.getElementById("Article");
     section.innerHTML = template({ articles });
     section.addEventListener("click", (e) => {
+      const cibleauteur = e.target.closest(".auteurName");
+      if (cibleauteur) {
+        e.preventDefault();
+        e.stopPropagation();
+        const idAuteur = Number(cibleauteur.dataset.id);
+        loadArticlesByAuteur(idAuteur).then(displayArticle);
+        return;
+      }
       const cible = e.target.closest("[data-lien]");
       if (!cible)
         return;
@@ -5894,23 +5910,11 @@
   }
 
   // ts/main.ts
-  new EventSource("/esbuild")?.addEventListener("change", () => location.reload());
-  loadArticles().then((articles) => displayArticle(articles));
-  loadCategories().then((categories) => displayCategories(categories));
-  tri();
-  filtre();
-  for (const auteurName of document.querySelectorAll(".auteurName")) {
-    if (auteurName instanceof HTMLElement) {
-      auteurName.addEventListener("click", (e) => {
-        const url = `/api/auteurs/${auteurName.dataset.id}/articles`;
-        const auteur = fetch(url).then((r) => r.json()).then((r) => {
-          const auteurDetails = document.createElement("p");
-          auteurName.parentElement?.parentElement?.appendChild(auteurDetails);
-        }).catch((err) => {
-          console.error("Erreur : " + err);
-        });
-      });
-    }
-  }
+  document.addEventListener("DOMContentLoaded", async () => {
+    loadArticles().then((articles) => displayArticle(articles));
+    loadCategories().then((categories) => displayCategories(categories));
+    tri();
+    filtre();
+  });
 })();
 //# sourceMappingURL=index.js.map

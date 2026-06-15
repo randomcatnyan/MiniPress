@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 import { Article, Categorie, ArticleComplet } from './types';
-import { loadArticleComplet, loadArticlesByCategorie } from './articleloader';
+import { loadArticleComplet, loadArticlesByCategorie, loadArticlesByAuteur} from './articleloader';
 
     let articlesActuels: Article[] = [];
 export function displayArticle(articles: Article[]): void {
@@ -12,6 +12,14 @@ export function displayArticle(articles: Article[]): void {
     section.innerHTML = template({ articles: articles });
 
     section.addEventListener('click', (e) => {
+        const cibleauteur= (e.target as HTMLElement).closest('.auteurName') as HTMLElement | null;
+        if (cibleauteur) {
+            e.preventDefault();
+            e.stopPropagation();
+            const idAuteur = Number(cibleauteur.dataset.id);
+            loadArticlesByAuteur(idAuteur).then(displayArticle);
+            return;
+        }
         const cible = (e.target as HTMLElement).closest('[data-lien]') as HTMLElement | null;
         if (!cible) return;
         e.preventDefault();

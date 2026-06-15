@@ -29,3 +29,11 @@ export async function loadArticlesByCategorie(id: number): Promise<Article[]> {
     return data.articles as Article[]; 
 }
 
+export async function loadArticlesByAuteur(id: number): Promise<Article[]> {
+    const response = await fetch(`${API_URL}/auteurs/${id}/articles`);
+    if (!response.ok) {
+        throw new Error(`erreur: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.articles ? (data.articles as Article[]) : (data as Article[]);
+}
