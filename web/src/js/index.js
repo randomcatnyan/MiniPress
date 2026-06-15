@@ -5794,7 +5794,7 @@
       throw new Error(`erreur: ${response.status}`);
     }
     const data = await response.json();
-    return data.articles ? data.articles : data;
+    return data;
   }
 
   // ts/module/ui.ts
@@ -5812,7 +5812,7 @@
         e.preventDefault();
         e.stopPropagation();
         const idAuteur = Number(cibleauteur.dataset.id);
-        loadArticlesByAuteur(idAuteur).then(displayArticle);
+        loadArticlesByAuteur(idAuteur).then(displayAuteur);
         return;
       }
       const cible = e.target.closest("[data-lien]");
@@ -5845,8 +5845,18 @@
       titre: article.titre,
       cree: article.cree,
       auteur: article.auteur.nom,
+      auteur_id: article.auteur.id,
       resume: article.resume ?? "",
       contenu: article.contenu ?? ""
+    });
+  }
+  function displayAuteur(data) {
+    const templateScript = document.getElementById("AuteurTemplate");
+    const template = import_handlebars.default.compile(templateScript.innerHTML);
+    const section = document.getElementById("Article");
+    section.innerHTML = template({
+      auteur: data.Auteur,
+      articles: data.articles
     });
   }
 
@@ -5890,6 +5900,14 @@
   var recherche = document.getElementById("recherche");
   recherche.addEventListener("input", () => {
     displayArticle(filtre(tousArticles, recherche.value));
+  });
+  var sectionArticle = document.getElementById("Article");
+  sectionArticle.addEventListener("click", (e) => {
+    const btn = e.target.closest(".retour");
+    if (btn) {
+      e.preventDefault();
+      displayArticle(tousArticles);
+    }
   });
 })();
 //# sourceMappingURL=index.js.map

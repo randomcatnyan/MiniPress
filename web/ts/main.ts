@@ -15,7 +15,6 @@ loadArticles()
 
 loadCategories().then((categories: Categorie[]) => displayCategories(categories)).catch((err) => console.error("Erreur chargement articles :", err.message));
 
-
     const selectTri = document.getElementById("tri-date") as HTMLSelectElement;
     selectTri.addEventListener("change", () => {
         const ordre = selectTri.value === "asc" ? "asc" : "desc";
@@ -26,5 +25,14 @@ loadCategories().then((categories: Categorie[]) => displayCategories(categories)
     recherche.addEventListener("input", () => {
         displayArticle(filtre(tousArticles, recherche.value));
     });
+
+const sectionArticle = document.getElementById("Article") as HTMLElement;
+sectionArticle.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest(".retour");
+    if (btn) {
+        e.preventDefault();
+        displayArticle(tousArticles);
+    }
+});
   
 
