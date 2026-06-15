@@ -5849,54 +5849,20 @@
       contenu: article.contenu ?? ""
     });
   }
-  function tri() {
-    const selectTri = document.getElementById("tri-date");
-    if (selectTri) {
-      selectTri.addEventListener("change", () => {
-        const ordre = selectTri.value.trim().toLowerCase();
-        let articlesTries = [...articlesActuels];
-        if (articlesTries.length === 0)
-          return;
-        if (ordre === "asc") {
-          articlesTries.sort((a, b) => {
-            if (a.cree < b.cree)
-              return -1;
-            if (a.cree > b.cree)
-              return 1;
-            return 0;
-          });
-        } else if (ordre === "desc") {
-          articlesTries.sort((a, b) => {
-            if (a.cree > b.cree)
-              return -1;
-            if (a.cree < b.cree)
-              return 1;
-            return 0;
-          });
-        }
-        displayArticle(articlesTries);
-      });
-    }
+
+  // ts/module/articles.ts
+  function tri(articles, ordre) {
+    return [...articles].sort((a, b) => {
+      if (ordre === "asc")
+        return a.cree < b.cree ? -1 : a.cree > b.cree ? 1 : 0;
+      return a.cree > b.cree ? -1 : a.cree < b.cree ? 1 : 0;
+    });
   }
-  function filtre() {
-    const rech = document.getElementById("recherche");
-    if (rech) {
-      rech.addEventListener("input", () => {
-        const mot = rech.value.trim().toLowerCase();
-        if (mot === "") {
-          displayArticle(articlesActuels);
-          return;
-        }
-        const filtre2 = articlesActuels.filter((article) => {
-          const titre = article.titre.toLowerCase().includes(mot);
-          return titre;
-        });
-        const templateScript = document.getElementById("ArticleTemplate");
-        const template = import_handlebars.default.compile(templateScript.innerHTML);
-        const section = document.getElementById("Article");
-        section.innerHTML = template({ articles: filtre2 });
-      });
-    }
+  function filtre(articles, motCle) {
+    const mot = motCle.trim().toLowerCase();
+    if (mot === "")
+      return articles;
+    return articles.filter((a) => a.titre.toLowerCase().includes(mot));
   }
 
   // ts/module/categorieloader.ts
@@ -5910,11 +5876,20 @@
   }
 
   // ts/main.ts
-  document.addEventListener("DOMContentLoaded", async () => {
-    loadArticles().then((articles) => displayArticle(articles));
-    loadCategories().then((categories) => displayCategories(categories));
-    tri();
-    filtre();
+  var tousArticles = [];
+  loadArticles().then((articles) => {
+    tousArticles = articles;
+    displayArticle(articles);
+  }).catch((err) => console.error("Erreur chargement articles :", err.message));
+  loadCategories().then((categories) => displayCategories(categories)).catch((err) => console.error("Erreur chargement articles :", err.message));
+  var selectTri = document.getElementById("tri-date");
+  selectTri.addEventListener("change", () => {
+    const ordre = selectTri.value === "asc" ? "asc" : "desc";
+    displayArticle(tri(tousArticles, ordre));
+  });
+  var recherche = document.getElementById("recherche");
+  recherche.addEventListener("input", () => {
+    displayArticle(filtre(tousArticles, recherche.value));
   });
 })();
 //# sourceMappingURL=index.js.map
