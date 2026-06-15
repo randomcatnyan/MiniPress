@@ -1,3 +1,18 @@
+// ============================================================================
+// A. LE POINT D'ENTRÉE : main.dart
+// C'est le fichier qui démarre l'application.
+//
+// 1. Initialisations requises :
+//    - WidgetsFlutterBinding.ensureInitialized() s'assure que le moteur de
+//      Flutter est prêt avant de lancer du code asynchrone.
+//    - initializeDateFormatting('fr_FR', null) prépare la bibliothèque de
+//      formatage pour afficher les dates en français (ex. : "15 juin 2026").
+//
+// 2. Lancement de l'application :
+//    - runApp(const MiniPressApp()) instancie et lance le widget racine de
+//      l'application, ce qui démarre la construction de l'arbre des widgets.
+// ============================================================================
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -13,7 +28,7 @@ void main() async {
   // Initialise le formatage des dates en français (ex: "11 juin 2026")
   await initializeDateFormatting('fr_FR', null);
 
-  // Rend la barre de statut du téléphone transparente pour faire plus joli
+  // Configure la transparence et la luminosité de la barre de statut du téléphone
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -32,13 +47,13 @@ class MiniPressApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Thème moderne avec palette indigo, ardoise et cyan
-    final Color primaryColor = const Color(0xFF4F46E5); // Indigo moderne
-    final Color secondaryColor = const Color(0xFF06B6D4); // Cyan vibrant
+    // Couleurs globales de l'application
+    final Color primaryColor = const Color(0xFF4F46E5);
+    final Color secondaryColor = const Color(0xFF06B6D4);
     final Color scaffoldBgColor =
-        const Color(0xFFF8FAFC); // Ardoise très clair (slate-50)
+        const Color(0xFFF8FAFC);
     final Color textDarkColor =
-        const Color(0xFF0F172A); // Ardoise très sombre (slate-900)
+        const Color(0xFF0F172A);
 
     return MaterialApp(
       title: 'MiniPress', // Le titre de l'application
@@ -50,25 +65,24 @@ class MiniPressApp extends StatelessWidget {
           primary: primaryColor,
           secondary: secondaryColor,
           surface: Colors.white,
-          background: scaffoldBgColor,
           onPrimary: Colors.white,
           onSecondary: Colors.white,
           onSurface: textDarkColor,
         ),
         scaffoldBackgroundColor: scaffoldBgColor,
-        // Utilise Google Fonts Outfit pour toute l'application
+        // Configure la police de caractères de l'application
         textTheme: GoogleFonts.outfitTextTheme(
           ThemeData.light().textTheme,
         ).apply(
           bodyColor: textDarkColor,
           displayColor: textDarkColor,
         ),
-        // Style personnalisé pour les AppBar
+        // Configuration de la barre supérieure (AppBarTheme)
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
           elevation: 0,
           scrolledUnderElevation: 0.5,
-          shadowColor: Colors.black.withOpacity(0.05),
+          shadowColor: Colors.black.withValues(alpha: 0.05),
           centerTitle: false,
           iconTheme: IconThemeData(color: textDarkColor),
           titleTextStyle: GoogleFonts.outfit(
@@ -82,7 +96,7 @@ class MiniPressApp extends StatelessWidget {
             statusBarBrightness: Brightness.light,
           ),
         ),
-        // Style personnalisé pour les cartes (Card)
+        // Configuration des cartes (CardTheme)
         cardTheme: CardThemeData(
           color: Colors.white,
           elevation: 0,
@@ -90,25 +104,25 @@ class MiniPressApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(
               color: const Color(
-                  0xFFE2E8F0), // Bordure fine ardoise clair (slate-200)
+                  0xFFE2E8F0), // Couleur de la bordure
               width: 1,
             ),
           ),
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
-        // Thème pour les boutons textuels
+        // Configuration des boutons textuels
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             foregroundColor: primaryColor,
             textStyle: GoogleFonts.outfit(fontWeight: FontWeight.w600),
           ),
         ),
-        // Thème pour les puces (Chips)
+        // Configuration des puces (Chips)
         chipTheme: ChipThemeData(
           backgroundColor: Colors.white,
           disabledColor: Colors.grey[200],
-          selectedColor: primaryColor.withOpacity(0.12),
-          secondarySelectedColor: primaryColor.withOpacity(0.12),
+          selectedColor: primaryColor.withValues(alpha: 0.12),
+          secondarySelectedColor: primaryColor.withValues(alpha: 0.12),
           labelStyle: GoogleFonts.outfit(
             fontSize: 13,
             fontWeight: FontWeight.w500,
@@ -125,7 +139,7 @@ class MiniPressApp extends StatelessWidget {
             side: BorderSide(color: const Color(0xFFE2E8F0)),
           ),
         ),
-        // Thème pour les inputs (recherche)
+        // Configuration des champs de saisie (Inputs)
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
@@ -144,10 +158,10 @@ class MiniPressApp extends StatelessWidget {
             borderSide: BorderSide(color: primaryColor, width: 1.5),
           ),
           hintStyle: GoogleFonts.outfit(
-            color: const Color(0xFF94A3B8), // slate-400
+            color: const Color(0xFF94A3B8),
             fontSize: 14,
           ),
-          prefixIconColor: const Color(0xFF64748B), // slate-500
+          prefixIconColor: const Color(0xFF64748B),
           suffixIconColor: const Color(0xFF64748B),
         ),
       ),

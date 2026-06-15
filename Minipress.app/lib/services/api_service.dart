@@ -1,3 +1,19 @@
+// ============================================================================
+// C. LA COMMUNICATION RÉSEAU : api_service.dart
+// Ce service effectue les requêtes HTTP vers votre API locale (sur l'adresse
+// spéciale d'émulateur http://10.0.2.2:8081).
+//
+// 1. Méthodes asynchrones (Future) :
+//    - Les requêtes réseau prennent du temps. Les fonctions renvoient donc un
+//      `Future<List<Article>>` ou un `Future<Article>`, ce qui signifie "je
+//      promets de te fournir le résultat plus tard".
+//
+// 2. Traitement des réponses :
+//    - Si le serveur répond avec un code HTTP 200 (Succès), le JSON est décodé
+//      (`jsonDecode`) et mappé vers nos objets Dart. Sinon, une erreur
+//      (`throw Exception`) est générée.
+// ============================================================================
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/article.dart';

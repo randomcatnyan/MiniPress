@@ -1,3 +1,25 @@
+// ============================================================================
+// D. L'ÉCRAN D'ACCUEIL : home_screen.dart
+// C'est le cœur interactif de votre application.
+//
+// 1. Cycle de vie (Lifecycle) :
+//    - initState() : Appelé automatiquement lorsque l'écran s'affiche pour la
+//      première fois. C'est ici qu'on lance la requête API initiale.
+//    - dispose() : Appelé quand l'écran est détruit. Il sert à libérer la
+//      mémoire occupée par le contrôleur de recherche (_searchController).
+//
+// 2. Gestion locale de l'état (setState) :
+//    - Chaque fois qu'une action se produit (saisie dans la recherche, clic
+//      sur une catégorie, inversion du tri), on met à jour nos variables et
+//      on appelle setState(() {}).
+//    - setState indique à Flutter qu'il doit exécuter à nouveau la méthode
+//      build(), ce qui met à jour l'affichage avec les nouveaux résultats.
+//
+// 3. Filtrage en direct :
+//    - Le getter _filteredAndSortedArticles filtre et trie la liste en direct
+//      selon l'auteur, le mot-clé et la date sans refaire de requête réseau.
+// ============================================================================
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/article.dart';
@@ -179,12 +201,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('MiniPress'),
         actions: [
-          // Badge moderne affichant le nombre d'articles
+          // Affichage du nombre d'articles
           Container(
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFF4F46E5).withOpacity(0.08), // Arrière-plan indigo doux
+              color: const Color(0xFF4F46E5).withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -209,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: GoogleFonts.outfit(
                 fontWeight: FontWeight.bold,
                 fontSize: 12,
-                color: const Color(0xFF94A3B8), // slate-400
+                color: const Color(0xFF94A3B8),
                 letterSpacing: 1.2,
               ),
             ),
@@ -306,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: const Color(0xFF0F172A),
                   ),
                 ),
-                // Bouton interactif pour inverser le tri chronologique
+                // Déclenche l'inversion du tri chronologique
                 TextButton.icon(
                   onPressed: () => setState(() => _sortAscending = !_sortAscending),
                   style: TextButton.styleFrom(
@@ -355,7 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           : ListView.builder(
                               itemCount: filtered.length,
                               itemBuilder: (context, index) {
-                                // Renvoyer une carte d'article personnalisée
+                                // Construit la carte de l'article pour chaque élément de la liste
                                 return ArticleCard(
                                   article: filtered[index],
                                   onTap: () => _navigateToDetail(filtered[index]),

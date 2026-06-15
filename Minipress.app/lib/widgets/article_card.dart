@@ -30,7 +30,7 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      clipBehavior: Clip.antiAlias, // Permet de bien rogner les coins si on a un effet InkWell
+      clipBehavior: Clip.antiAlias, // Rogne le contenu pour s'adapter aux bordures
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), // Espacement externe
       child: InkWell(
         onTap: onTap, // Clic sur la carte entière
@@ -39,12 +39,12 @@ class ArticleCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Indicateur de couleur vertical à gauche (accent Indigo)
+              // Indicateur vertical à gauche
               Container(
                 width: 4,
-                height: 52, // Hauteur fixe pour s'aligner joliment avec le texte
+                height: 52, // Hauteur de l'indicateur
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4F46E5), // Indigo moderne
+                  color: const Color(0xFF4F46E5),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -60,7 +60,7 @@ class ArticleCard extends StatelessWidget {
                       style: GoogleFonts.outfit(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xFF0F172A), // slate-900
+                        color: const Color(0xFF0F172A),
                         height: 1.3,
                       ),
                     ),
@@ -73,7 +73,7 @@ class ArticleCard extends StatelessWidget {
                           const Icon(
                             Icons.calendar_today_outlined, 
                             size: 13, 
-                            color: Color(0xFF64748B), // slate-500
+                            color: Color(0xFF64748B),
                           ),
                           const SizedBox(width: 4),
                           Text(
@@ -81,7 +81,7 @@ class ArticleCard extends StatelessWidget {
                             style: GoogleFonts.outfit(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: const Color(0xFF64748B), // slate-500
+                              color: const Color(0xFF64748B),
                             ),
                           ),
                           const SizedBox(width: 14),
@@ -99,10 +99,10 @@ class ArticleCard extends StatelessWidget {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFF1F5F9), // slate-100
+                                  color: const Color(0xFFF1F5F9),
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
-                                    color: const Color(0xFFE2E8F0), // slate-200
+                                    color: const Color(0xFFE2E8F0),
                                     width: 1,
                                   ),
                                 ),
@@ -120,7 +120,7 @@ class ArticleCard extends StatelessWidget {
                                       style: GoogleFonts.outfit(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w600,
-                                        color: const Color(0xFF475569), // slate-600
+                                        color: const Color(0xFF475569),
                                       ),
                                     ),
                                   ],
@@ -135,7 +135,7 @@ class ArticleCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              // Petite flèche à droite pour indiquer qu'on peut cliquer
+              // Indicateur de navigation vers le détail
               const Align(
                 alignment: Alignment.center,
                 child: Padding(
@@ -143,7 +143,7 @@ class ArticleCard extends StatelessWidget {
                   child: Icon(
                     Icons.arrow_forward_ios_rounded, 
                     size: 14, 
-                    color: Color(0xFF94A3B8), // slate-400
+                    color: Color(0xFF94A3B8),
                   ),
                 ),
               ),

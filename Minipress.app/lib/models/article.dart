@@ -1,5 +1,19 @@
-// Modèle de données qui représente un Article dans notre application.
-// Il permet de transformer les données JSON reçues de l'API en objet utilisable en Dart.
+// ============================================================================
+// B. LES MODÈLES DE DONNÉES : article.dart
+// Il sert à structurer les données d'un article récupérées de l'API.
+//
+// 1. Rôle du Modèle :
+//    - Il permet de transformer les données JSON reçues de l'API en objet
+//      utilisable en Dart via des constructeurs nommés factory (fromListJson,
+//      fromDetailJson).
+//
+// 2. Pourquoi des constructeurs de désérialisation ?
+//    - L'API envoie des données sous forme de chaînes de caractères brutes
+//      (JSON). Le rôle de ces constructeurs est d'extraire les données et de
+//      sécuriser les types (comme convertir un ID envoyé sous forme de texte
+//      "3" en entier 3 grâce à une fonction de nettoyage).
+// ============================================================================
+
 class Article {
   final int? id; // L'identifiant unique de l'article (peut être nul si absent de la liste)
   final String titre; // Le titre de l'article

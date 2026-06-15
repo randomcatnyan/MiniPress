@@ -1,3 +1,20 @@
+// ============================================================================
+// E. L'ÉCRAN DE DÉTAIL : article_detail_screen.dart
+// Cet écran affiche le contenu complet d'un article de façon asynchrone.
+//
+// 1. FutureBuilder :
+//    - Il écoute le Future renvoyé par l'API pour charger l'article complet.
+//    - Il reconstruit automatiquement l'UI selon l'état de la requête :
+//      * En attente (ConnectionState.waiting) -> indicateur de chargement.
+//      * Erreur (snapshot.hasError) -> écran d'erreur + bouton réessai.
+//      * Succès (snapshot.hasData) -> affiche l'article (image, titre, auteur,
+//        date formatée, résumé et contenu principal).
+//
+// 2. Communication entre écrans :
+//    - Le clic sur le nom de l'auteur appelle Navigator.pop(context, auteurNom)
+//      ce qui ferme le détail et renvoie le nom à l'accueil pour filtrer la liste.
+// ============================================================================
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -113,18 +130,18 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Container(
                         height: 240,
-                        color: const Color(0xFFF1F5F9), // slate-100
+                        color: const Color(0xFFF1F5F9),
                         child: const Center(
                           child: CircularProgressIndicator(),
                         ),
                       ),
                       errorWidget: (context, url, error) => Container(
                         height: 240,
-                        color: const Color(0xFFF1F5F9), // slate-100
+                        color: const Color(0xFFF1F5F9),
                         child: const Center(
                           child: Icon(
                             Icons.broken_image_outlined,
-                            color: Color(0xFF94A3B8), // slate-400
+                            color: Color(0xFF94A3B8),
                             size: 48,
                           ),
                         ),
@@ -137,15 +154,15 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // 2. Badge de catégorie
+                        // 2. Affiche la catégorie de l'article
                         if (article.categorieNom != null) ...[
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF06B6D4).withOpacity(0.08), // Cyan très doux
+                              color: const Color(0xFF06B6D4).withValues(alpha: 0.08),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: const Color(0xFF06B6D4).withOpacity(0.2),
+                                color: const Color(0xFF06B6D4).withValues(alpha: 0.2),
                                 width: 1,
                               ),
                             ),
@@ -154,7 +171,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                               style: GoogleFonts.outfit(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: const Color(0xFF0891B2), // Cyan foncé
+                                color: const Color(0xFF0891B2),
                                 letterSpacing: 1.0,
                               ),
                             ),
@@ -162,30 +179,30 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                           const SizedBox(height: 12),
                         ],
 
-                        // 3. Titre de l'article (Typography Playfair Display pour le côté éditorial/presse)
+                        // 3. Affiche le titre de l'article
                         Text(
                           article.titre,
                           style: GoogleFonts.playfairDisplay(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
-                            color: const Color(0xFF0F172A), // slate-900
+                            color: const Color(0xFF0F172A),
                             height: 1.25,
                           ),
                         ),
                         const SizedBox(height: 16),
 
-                        // 4. Fiche d'informations de l'auteur et de la date (Avatar + Détails alignés)
+                        // 4. Affiche les informations de l'auteur et la date de publication
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF8FAFC), // slate-50
+                            color: const Color(0xFFF8FAFC),
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: const Color(0xFFE2E8F0)), // slate-200
+                            border: Border.all(color: const Color(0xFFE2E8F0)),
                           ),
                           child: Row(
                             children: [
                               CircleAvatar(
-                                backgroundColor: const Color(0xFF4F46E5).withOpacity(0.1),
+                                backgroundColor: const Color(0xFF4F46E5).withValues(alpha: 0.1),
                                 radius: 20,
                                 child: Text(
                                   article.auteurNom != null && article.auteurNom!.isNotEmpty
@@ -207,7 +224,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                       'Rédacteur',
                                       style: GoogleFonts.outfit(
                                         fontSize: 11,
-                                        color: const Color(0xFF64748B), // slate-500
+                                        color: const Color(0xFF64748B),
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -225,7 +242,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                           style: GoogleFonts.outfit(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF4F46E5), // Lien bleu indigo cliquable
+                                            color: const Color(0xFF4F46E5),
                                             decoration: TextDecoration.underline,
                                           ),
                                         ),
@@ -258,7 +275,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                       style: GoogleFonts.outfit(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color(0xFF334155), // slate-700
+                                        color: const Color(0xFF334155),
                                       ),
                                     ),
                                   ],
@@ -271,14 +288,14 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                         const Divider(color: Color(0xFFE2E8F0)),
                         const SizedBox(height: 16),
 
-                        // 5. Résumé de l'article (Chapeau / En-tête de contenu avec une bordure de citation)
+                        // 5. Affiche le résumé de l'article
                         if (article.resume != null && article.resume!.isNotEmpty) ...[
                           Container(
                             padding: const EdgeInsets.only(left: 16, top: 4, bottom: 4),
                             decoration: const BoxDecoration(
                               border: Border(
                                 left: BorderSide(
-                                  color: Color(0xFF4F46E5), // Bordure gauche Indigo
+                                  color: Color(0xFF4F46E5),
                                   width: 4.0,
                                 ),
                               ),
@@ -289,7 +306,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xFF334155), // slate-700
+                                color: const Color(0xFF334155),
                                 height: 1.45,
                               ),
                             ),
@@ -297,14 +314,14 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                           const SizedBox(height: 24),
                         ],
 
-                        // 6. Contenu complet de l'article
+                        // 6. Affiche le corps du contenu de l'article
                         if (article.contenu != null && article.contenu!.isNotEmpty)
                           Text(
                             article.contenu!,
                             style: GoogleFonts.outfit(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
-                              color: const Color(0xFF334155), // slate-700
+                              color: const Color(0xFF334155),
                               height: 1.6,
                             ),
                           ),

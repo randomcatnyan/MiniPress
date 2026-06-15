@@ -26,26 +26,26 @@ class CategorieChip extends StatelessWidget {
           curve: Curves.easeInOut,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
-            // Dégradé premium du violet au bleu/cyan si sélectionné, sinon gris slate
+            // Dégradé si sélectionné, sinon couleur neutre
             gradient: isSelected
                 ? const LinearGradient(
-                    colors: [Color(0xFF4F46E5), Color(0xFF06B6D4)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  )
+                     colors: [Color(0xFF4F46E5), Color(0xFF06B6D4)],
+                     begin: Alignment.topLeft,
+                     end: Alignment.bottomRight,
+                   )
                 : null,
-            color: isSelected ? null : const Color(0xFFF1F5F9), // slate-100
+            color: isSelected ? null : const Color(0xFFF1F5F9),
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: isSelected
                   ? Colors.transparent
-                  : const Color(0xFFE2E8F0), // slate-200
+                  : const Color(0xFFE2E8F0),
               width: 1.0,
             ),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: const Color(0xFF4F46E5).withOpacity(0.35),
+                      color: const Color(0xFF4F46E5).withValues(alpha: 0.35),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -57,7 +57,7 @@ class CategorieChip extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontSize: 14,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: isSelected ? Colors.white : const Color(0xFF475569), // slate-600
+              color: isSelected ? Colors.white : const Color(0xFF475569),
             ),
           ),
         ),
