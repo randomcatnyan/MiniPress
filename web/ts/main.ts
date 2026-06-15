@@ -12,22 +12,3 @@ loadCategories().then((categories: Categorie[]) => displayCategories(categories)
 tri();
 filtre();
 
-
-// mis ça ici le temps de le faire
-for (const auteurName of document.querySelectorAll(".auteurName")) {
-  if (auteurName instanceof HTMLElement) {
-    auteurName.addEventListener("click", e => {
-      const url = `/api/auteurs/${auteurName.dataset.id}/articles`;
-      const auteur = fetch(url)
-        //
-        .then(r => r.json())
-        .then(r => {
-          const auteurDetails = document.createElement("p");
-          auteurName.parentElement?.parentElement?.appendChild(auteurDetails);
-        })
-        .catch(err => {
-          console.error("Erreur : " + err);
-        });
-    });
-  }
-}
