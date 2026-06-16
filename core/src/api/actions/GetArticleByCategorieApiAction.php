@@ -42,7 +42,10 @@ class GetArticleByCategorieApiAction
                 $tab[] = [
                     'titre' => $article['titre'],
                     'cree' => $article['cree'],
-                    'auteur' => $article['auteur']['nom'] ?? null,
+                    'auteur' => [
+                        'nom' => $article['auteur']['nom'] ?? null,
+                        'id' => $article['auteur_id'] ?? null
+                    ],
                     'lien' => $routeParser->urlFor('api_article_complet', ['id' => $article['id']])
                     
                 ];

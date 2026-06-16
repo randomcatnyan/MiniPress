@@ -6,3 +6,8 @@ final articlesProvider = FutureProvider<List<Article>>((ref) async {
   final api = ApiService();
   return api.getArticles();
 });
+
+final articlesByCategorieProvider = FutureProvider.family<List<Article>, int>((ref, categorieId) async {
+  final api = ApiService();
+  return api.getArticlesByCategorie(categorieId);
+});
