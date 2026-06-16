@@ -24,9 +24,7 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->add(function ($request, $handler) {
     $response = $handler->handle($request);
     return $response
-        ->withHeader('Access-Control-Allow-Origin', '*')
-        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        ->withHeader('Access-Control-Allow-Headers', 'Content-Type');
+        ->withHeader('Access-Control-Allow-Origin', '*');
 });
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
