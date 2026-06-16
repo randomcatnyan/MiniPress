@@ -15,7 +15,7 @@ class ApiService {
   );
 
   Future<List<Article>> getArticles() async {
-    final response = await _dio.get('/articles');
+    final response = await _dio.get('/articles?sort=desc');
     final List<dynamic> data = response.data;
     return data.map((json) => Article.fromJson(json)).toList();
   }
