@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/article_provider.dart';
+import 'articles_complet_screen.dart';
 
 class ArticlesScreen extends ConsumerWidget {
   const ArticlesScreen({super.key});
@@ -19,10 +20,21 @@ class ArticlesScreen extends ConsumerWidget {
           itemBuilder: (context, index) {
             final article = articles[index];
             final nomAuteur = article.auteur['nom'] ?? 'Inconnu';
-            
+
             return ListTile(
               title: Text(article.titre),
               subtitle: Text('Créé le : ${article.cree} — par $nomAuteur'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                final String urlLien = article.lien;
+                final int id = int.parse(urlLien.split('/').last);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ArticleCompletScreen(articleId: id),
+                  ),
+                );
+              },
             );
           },
         ),
