@@ -35,5 +35,5 @@ export async function loadArticlesByAuteur(id: number): Promise<Article[]> {
         throw new Error(`erreur: ${response.status}`);
     }
     const data = await response.json();
-    return data.articles ? (data.articles as Article[]) : (data as Article[]);
+    return data;
 }

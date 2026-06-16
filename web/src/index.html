@@ -41,8 +41,20 @@
         </article>
       {{/each}}
     </script>
+
+    <script id="AuteurTemplate" type="text/x-handlebars-template">
+      <button class="retour">Retour</button>
+      <h2>Articles de {{auteur.nom}}</h2>
+        {{#each articles}}
+            <article>
+                <h3><a href="#" data-lien="{{lien}}">{{titre}}</a></h3>
+                <p>{{cree}}</p>
+            </article>
+        {{/each}}
+    </script>
     <script id="ArticleCompletTemplate" type="text/x-handlebars-template">
         <article>
+            <button class="retour">Retour</button>
             <h2>{{titre}}</h2>
             <span class="auteurName" data-id="{{auteur_id}}">{{auteur}}</span>
             <div class="resume">{{{resume}}}</div>

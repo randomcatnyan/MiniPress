@@ -20,5 +20,8 @@ export interface ArticleComplet{
     resume: string;
     contenu: string;
     cree: string;
-    auteur: { nom: string };
+    auteur: {
+        nom: string;
+        id: number;
+    }
 }

@@ -17,7 +17,7 @@ export function displayArticle(articles: Article[]): void {
             e.preventDefault();
             e.stopPropagation();
             const idAuteur = Number(cibleauteur.dataset.id);
-            loadArticlesByAuteur(idAuteur).then(displayArticle);
+            loadArticlesByAuteur(idAuteur).then(displayAuteur);
             return;
         }
         const cible = (e.target as HTMLElement).closest('[data-lien]') as HTMLElement | null;
@@ -53,8 +53,19 @@ export function displayArticleComplet(article: ArticleComplet){
         titre:   article.titre,
         cree:    article.cree,
         auteur:  article.auteur.nom,
+        auteur_id: article.auteur.id,
         resume:  article.resume ?? '',  
         contenu: article.contenu ?? '',  
+    });
+}
+
+export function displayAuteur(data: any): void {
+    const templateScript = document.getElementById('AuteurTemplate') as HTMLElement;
+    const template = Handlebars.compile(templateScript.innerHTML);
+    const section = document.getElementById('Article') as HTMLElement;
+    section.innerHTML = template({
+        auteur:   data.Auteur,     
+        articles: data.articles,
     });
 }
 
