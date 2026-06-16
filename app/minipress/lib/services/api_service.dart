@@ -31,4 +31,12 @@ class ApiService {
     final List<dynamic> data = response.data['articles'];
     return data.map((json) => Article.fromJson(json)).toList();
   }
+
+  Future<List<Article>> getArticlesByAuteur(int id) async {
+    final response = await _dio.get('/auteurs/$id/articles');
+    final List<dynamic> data = response.data['articles'];
+    return data.map((json) => Article.fromJson(json)).toList();
+  }
+
+
 }
