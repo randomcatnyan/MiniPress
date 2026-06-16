@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/categorie_provider.dart';
+import 'categorie_articles_screen.dart';
 
 class CategoriesScreen extends ConsumerWidget {
   const CategoriesScreen({super.key});
@@ -21,6 +22,18 @@ class CategoriesScreen extends ConsumerWidget {
             return ListTile(
               title: Text(cat.titre),
               subtitle: cat.description != null ? Text(cat.description!) : null,
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CategorieArticlesScreen(
+                      categorieId: cat.id,
+                      categorieTitre: cat.titre,
+                    ),
+                  ),
+                );
+              }
             );
           },
         ),
