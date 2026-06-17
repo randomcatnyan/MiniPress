@@ -9,7 +9,7 @@
 - Fonctionnalité 5: Cree des categories (Fahim)
 - Fonctionnalité 6: Cree des User (Fahim)
 - Fonctionnalité 7: publication/depulication (Luca)
-- Toutes les a^pi ont ete faite par Nacime et des modifs au fur et a mesure pour chacun d entre nous
+- Toutes les api ont ete faite par Nacime et des modifs au fur et a mesure pour chacun d entre nous
 
 - Architecture: MVC 3 tiers (fahim)
 
