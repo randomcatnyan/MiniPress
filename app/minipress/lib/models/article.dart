@@ -28,8 +28,4 @@ class Article {
       contenu: data['contenu']?.toString() ?? '',
     );
   }
-
-  @override
-  String toString() =>
-      "Article(id: $id, titre: $titre, cree: $cree, lien: $lien)";
 }
