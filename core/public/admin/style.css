@@ -19,7 +19,6 @@ body {
     line-height: 1.6;
 }
 
-/* ---- Header & nav (conservés) ---- */
 header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -42,7 +41,7 @@ nav .nav-link {
 }
 nav .nav-link:hover { background: var(--bg); color: var(--text); }
 
-/* ---- Zone principale ---- */
+
 main { max-width: 760px; margin: 2.5rem auto; padding: 0 2rem; }
 
 h1, h2 { font-weight: 600; letter-spacing: -.01em; }
@@ -51,7 +50,7 @@ h2 { font-size: 1.2rem; }
 
 a { color: var(--text); text-underline-offset: 3px; }
 
-/* ---- Listes (articles, catégories) ---- */
+
 main ul { list-style: none; padding: 0; margin: 0; }
 main ul li {
     background: var(--surface);
@@ -63,14 +62,13 @@ main ul li {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    flex-wrap: wrap;             /* gère les contenus longs : ça passe à la ligne */
-    overflow-wrap: anywhere;     /* coupe les très longs mots/titres */
+    flex-wrap: wrap;    
+    overflow-wrap: anywhere;     
 }
 main ul li a { font-weight: 500; }
 main ul li .meta { color: var(--muted); font-size: 0.85rem; }
-main ul li .info { min-width: 0; flex: 1; }   /* permet au texte de rétrécir au lieu de déborder */
+main ul li .info { min-width: 0; flex: 1; }
 
-/* ---- Badge de publication (remplace le vert/rouge) ---- */
 .badge {
     display: inline-block;
     font-size: 0.72rem;
@@ -84,7 +82,6 @@ main ul li .info { min-width: 0; flex: 1; }   /* permet au texte de rétrécir a
 .badge--pub   { background: var(--btn); color: #fff; }
 .badge--draft { background: transparent; color: var(--muted); border: 1px solid var(--border); }
 
-/* ---- Formulaires ---- */
 form {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -112,7 +109,6 @@ input:focus, textarea:focus, select:focus {
 }
 textarea { resize: vertical; min-height: 5rem; }
 
-/* ---- Boutons (charcoal, plus de vert) ---- */
 button, input[type="submit"] {
     background: var(--btn);
     color: #fff;
@@ -126,7 +122,7 @@ button, input[type="submit"] {
 }
 button:hover, input[type="submit"]:hover { background: var(--btn-hover); }
 
-/* bouton secondaire : le toggle Publier/Dépublier dans la liste */
+
 main ul li form { padding: 0; border: none; background: none; margin: 0; max-width: none; }
 main ul li button {
     background: var(--btn-soft);
@@ -136,5 +132,4 @@ main ul li button {
 }
 main ul li button:hover { background: #e0ded9; }
 
-/* ---- Footer ---- */
 .site-footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2.5rem 0; }

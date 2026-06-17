@@ -30,7 +30,7 @@ h3 {
     border-bottom: 1px solid var(--border);
 }
 
-/* --- Tri + recherche --- */
+
 .tri-container {
     display: flex;
     align-items: center;
@@ -56,7 +56,6 @@ select:focus, #recherche:focus {
     border-color: var(--accent);
 }
 
-/* --- Liste d'articles --- */
 #Article article {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -84,7 +83,7 @@ select:focus, #recherche:focus {
 }
 .auteurName:hover { text-decoration: underline; }
 
-/* --- Article complet --- */
+
 #Article h2 { margin-top: 0; }
 #Article .resume {
     font-style: italic;
@@ -94,7 +93,6 @@ select:focus, #recherche:focus {
 #Article .contenu { line-height: 1.7; }
 #Article .contenu p { margin: 0 0 1rem; }
 
-/* --- Catégories --- */
 #categories {
     list-style: none;
     padding: 0;

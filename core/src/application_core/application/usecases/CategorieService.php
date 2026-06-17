@@ -24,7 +24,7 @@ class CategorieService implements CategorieInterface
             $categorie->save();
             return $categorie->id;
         } catch (QueryException $e) {
-            throw new CategorieException("Erreur SQL Brute : " . $e->getMessage());
+            throw new CategorieException("Erreur SQL : " . $e->getMessage());
         }
     }
 
