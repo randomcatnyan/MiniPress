@@ -57,6 +57,9 @@
             <button class="retour">Retour</button>
             <h2>{{titre}}</h2>
             <span class="auteurName" data-id="{{auteur_id}}">{{auteur}}</span>
+            {{#if image_url}}
+              <img src="{{image_url}}" alt="{{titre}}" class="article-image">
+            {{/if}}
             <div class="resume">{{{resume}}}</div>
             <div class="contenu">{{{contenu}}}</div>
         </article>

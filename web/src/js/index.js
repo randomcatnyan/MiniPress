@@ -5760,7 +5760,7 @@
   });
 
   // ts/module/config.ts
-  var API_URL = "http://localhost:30003/api";
+  var API_URL = "http://docketu.iutnc.univ-lorraine.fr:30003/api";
 
   // ts/module/articleloader.ts
   async function loadArticles() {
@@ -5846,6 +5846,7 @@
       cree: article.cree,
       auteur: article.auteur.nom,
       auteur_id: article.auteur.id,
+      image_url: article.image_url,
       resume: article.resume ?? "",
       contenu: article.contenu ?? ""
     });

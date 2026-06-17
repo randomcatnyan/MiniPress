@@ -22,6 +22,7 @@ class ArticleManagementService implements ArticleManagementInterface
         $article->contenu = $data['contenu'];
         $article->categorie_id = $data['categorie_id'] ?? null;
         $article->auteur_id = $data['auteur_id'];
+        $article->image_url = $data['image_url'] ?? null;
         $article->est_publie = 0;
 
         $article->save();

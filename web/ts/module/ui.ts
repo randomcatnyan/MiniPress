@@ -54,6 +54,7 @@ export function displayArticleComplet(article: ArticleComplet){
         cree:    article.cree,
         auteur:  article.auteur.nom,
         auteur_id: article.auteur.id,
+        image_url: article.image_url,
         resume:  article.resume ?? '',  
         contenu: article.contenu ?? '',  
     });
