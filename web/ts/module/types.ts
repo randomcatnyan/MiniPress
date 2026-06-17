@@ -1,5 +1,6 @@
 export interface Article {
     titre: string;
+    resume?: string;
     cree: string;
     auteur: {
         nom: string;

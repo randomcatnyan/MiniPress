@@ -40,6 +40,7 @@ class GetArticleApiAction
             }
             $tab[] = [
                 'titre' => $article['titre'],
+                'resume' => $article['resume'] ?? '',
                 'cree' => $article['cree'],
                 'auteur' => [
                     'nom' => $article['auteur']['nom'] ?? null,

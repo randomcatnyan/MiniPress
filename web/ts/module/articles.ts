@@ -10,5 +10,9 @@ export function tri(articles: Article[], ordre: 'asc' | 'desc'): Article[] {
 export function filtre(articles: Article[], motCle: string): Article[] {
     const mot = motCle.trim().toLowerCase();
     if (mot === '') return articles;
-    return articles.filter((a) => a.titre.toLowerCase().includes(mot));
+    return articles.filter((a) => {
+        const titreMatch = a.titre.toLowerCase().includes(mot);
+        const resumeMatch = a.resume?.toLowerCase().includes(mot) ?? false;
+        return titreMatch || resumeMatch;
+    });
 }
