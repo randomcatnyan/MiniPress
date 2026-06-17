@@ -4,6 +4,7 @@ services:
   sql:
     image: mariadb:11.4
     container_name: minipress_db
+    restart: unless-stopped
     env_file:
       - .database.env
     volumes:
@@ -15,6 +16,7 @@ services:
 
   adminer:
     image: adminer:5.4.2
+    restart: unless-stopped
     ports:
       - "30000:8080"
     command: php -S 0.0.0.0:8080 -t /var/www/html
@@ -25,6 +27,7 @@ services:
 
   web:
     image: nginx:1.31.1
+    restart: unless-stopped
     ports:
       - "30001:80"
     volumes:
@@ -34,6 +37,7 @@ services:
     build:
       context: core
       dockerfile: ./core.Dockerfile
+    restart: unless-stopped
     ports:
       - "30002:80"
     volumes:
@@ -49,6 +53,7 @@ services:
     build:
       context: core
       dockerfile: ./core.Dockerfile
+    restart: unless-stopped
     ports:
       - "30003:80"
     volumes:
