@@ -26,9 +26,22 @@ class ApiService {
     return data.map((json) => Categorie.fromJson(json)).toList();
   }
 
+
   Future<Article> getArticleById(int id) async {
   final response = await _dio.get('/articles/$id');
   final dynamic data = response.data;
   return Article.fromJson(data as Map<String, dynamic>);
 }
+
+  Future<List<Article>> getArticlesByCategorie(int id) async {
+    final response = await _dio.get('/categories/$id/articles');
+    final List<dynamic> data = response.data['articles'];
+    return data.map((json) => Article.fromJson(json)).toList();
+  }
+
+  Future<List<Article>> getArticlesByAuteur(int id) async {
+    final response = await _dio.get('/auteurs/$id/articles');
+    final List<dynamic> data = response.data['articles'];
+    return data.map((json) => Article.fromJson(json)).toList();
+  }
 }
