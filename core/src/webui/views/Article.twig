@@ -7,6 +7,9 @@
         {% for c in articles %}
             <li>
                 <div class ="info">
+                    {% if c.image_url %}
+                        <img src="{{ c.image_url }}" alt="" style="max-width: 80px; border-radius: 4px;">
+                    {% endif %}
                     <strong>{{ c.titre }}</strong>
                     {% if c.est_publie == 1 %}
                         <span class="badge badge--pub">publier</span>

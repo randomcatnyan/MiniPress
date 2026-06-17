@@ -19,6 +19,7 @@ export interface ArticleComplet{
     titre: string;
     resume: string;
     contenu: string;
+    image_url?: string,
     cree: string;
     auteur: {
         nom: string;

@@ -41,6 +41,8 @@ class CreateArticleAction extends AbstractAction
         $resume = $data['resume']  ?? '';
         $contenu = $data['contenu'] ?? '';
         $categorieId = $data['categorie_id'] ?: null;
+        $imageUrl = filter_var($data['image_url'] ?? '', FILTER_SANITIZE_URL) ?: null;
+
 
         try {
             $this->articleManagementService->creerArticle([
@@ -49,6 +51,7 @@ class CreateArticleAction extends AbstractAction
                 'contenu' => $contenu,
                 'auteur_id' => $userId,
                 'categorie_id' => $categorieId,
+                'image_url' => $imageUrl,
             ]);
 
             return $rs->withHeader('Location', '/articles')->withStatus(302);
