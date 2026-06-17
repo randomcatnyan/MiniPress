@@ -1,119 +1,29 @@
-USE minipress;
+delete from articles;
+delete from categories;
+delete from utilisateurs;
 
-INSERT INTO utilisateurs (nom, email, mdp, role) VALUES
-('Alice Dupont',    'alice.dupont@email.com',    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
-('Bob Martin',      'bob.martin@email.com',      '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('Claire Moreau',   'claire.moreau@email.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('David Bernard',   'david.bernard@email.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('Emma Leroy',      'emma.leroy@email.com',      '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('François Petit',  'francois.petit@email.com',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('Gaëlle Roux',     'gaelle.roux@email.com',     '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user'),
-('Hugo Fournier',   'hugo.fournier@email.com',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user');
+insert into utilisateurs (id, nom, email, mdp, role) values
+(1, 'Luca Vidiri', 'Luca.vidiri@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
+(2, 'Nacime Laghezali', 'nacime.laghezali@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user');
 
+insert into categories (id, titre, description) values
+(1, 'ligue 1', 'toute lactu du championnat de france de football'),
+(2, 'ligue des champions', 'les soirées européennes et les chocs de la coupe aux grandes oreilles'),
+(3, 'mercato', 'les rumeurs de transferts les officialisations et les négociations');
 
-INSERT INTO categories (titre, description) VALUES
-('Technologie',    'Actualités et tendances du monde de la tech, intelligence artificielle, gadgets et innovations.'),
-('Science',        'Découvertes scientifiques, recherche, espace et environnement.'),
-('Culture',        'Arts, cinéma, musique, littérature et événements culturels.'),
-('Sport',          'Résultats, analyses et actualités du monde sportif.'),
-('Économie',       'Marchés financiers, entreprises, start-ups et tendances économiques.'),
-('Santé',          'Bien-être, médecine, nutrition et conseils santé au quotidien.'),
-('Voyage',         'Destinations, conseils de voyage, bons plans et récits d''aventures.'),
-('Gastronomie',    'Recettes, restaurants, tendances culinaires et critiques gastronomiques.');
+insert into articles (id, titre, resume, contenu, image_url, est_publie, categorie_id, auteur_id) values
+(1, 'le psg domine le classique au velodrome', 'le paris saint germain s est imposé avec la manière face à l olympique de marseille lors du choc de la journée confortant ainsi sa place de leader du championnat face à un rival impuissant.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. cras varius tristique velit id feugiat. proin nec finibus elit. donec nec justo sed velit pretium placerat vitae at purus. quisque tincidunt lectus at lectus laoreet gravida. sed scelerisque mi ligula id porttitor ipsum faucibus et. etiam id ligula tortor. suspendisse potenti. morbi a vulputate massa. integer quis interdum erat sed maximus magna suspendisse tristique accumsan elit ut.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. duis iaculis sollicitudin turpis at sodales. nullam non risus eget elit molestie feugiat. integer ut lacus in turpis consectetur convallis nec a leo. curabitur at urna lorem. morbi porta nisl id nunc pretium finibus. pellentesque placerat erat vel accumsan ultrices. sed eu lorem ex. donec eu leo at nisl sollicitudin consequat ac sed sem. phasellus interdum sapien sed tortor porta rhoncus.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. fusce vulputate tortor finibus eleifend egestas. class aptent taciti sociosqu ad litora torquent per conubia nostra per inceptos himenaeos. dynamic nisl diam eget est pellentesque hendrerit. phasellus sed justo est. cras tempor finibus elementum. proin vel finibus massa. donec efficitur eget ante vitae varius. nullam ac mollis lectus. maecenas feugiat hendrerit nisi sit amet vestibulum ex eleifend id.', 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2', true, 1, 1),
 
-INSERT INTO articles (titre, resume, contenu, image_url, categorie_id, auteur_id) VALUES
-('L''essor de l''intelligence artificielle en 2026',
- 'Comment l''IA transforme notre quotidien et les entreprises.',
- 'L''intelligence artificielle connaît une croissance exponentielle en 2026. Des modèles de langage toujours plus performants aux assistants autonomes, l''IA s''intègre désormais dans tous les secteurs d''activité. Les entreprises investissent massivement dans l''automatisation, tandis que les questions éthiques restent au cœur des débats. Cet article explore les avancées majeures de l''année et leurs implications pour la société.',
- 'https://images.unsplash.com/photo-1677442135136-760c93c1f236',
- 1, 1),
+(2, 'les secrets tactiques de la remontada de brest', 'le stade brestois a surpris tout le monde ce week end en inversant la tendance de manière héroïque grâce à des ajustements tactiques précis mis en place à la mi temps.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. suspendisse iaculis tincidunt lorem quis ultrices. nulla facilisi. morbi sed arcu nec ante molestie tempor. curabitur pretium ex vitae mi tempus imperdiet. aliquam elementum interdum ipsum id iaculis. donec interdum accumsan risus nec commodo. vestibulum nec nulla sed diam viverra dictum in pulvinar libero. curabitur molestie leo nec erat pretium semper. proin at justo at risus viverra finibus ac sit amet sem.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. nulla ac diam accumsan ligula tempor cursus ac eget ex. nam ut ante non arcu congue laoreet non id magna. morbi porta eleifend dictum. aliquam rhoncus ex sapien ut convallis arcu facilisis sed. integer ac tempor sem. sed fringilla tempor sem non finibus. nulla sit amet nulla elit. integer imperdiet id libero ut fringilla. etiam rhoncus sapien ipsum vitae feugiat felis viverra ut.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. ut scelerisque elit magna vitae placerat lorem molestie vitae. donec sit amet felis arcu. duis facilisis diam nulla eu consequat felis iaculis eu. integer ut eros lectus. ut rhoncus lectus at nibh maximus tincidunt. phasellus aliquet tellus ac lectus elementum non sollicitudin libero elementum. duis condimentum purus sapien id scelerisque metus cursus eu. sed a nunc facilisis purus suscipit varius eu elementum nibh.', 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c', true, 1, 1),
 
-('Les smartphones pliables conquièrent le marché',
- 'Analyse de la nouvelle génération de téléphones à écran flexible.',
- 'Après des débuts timides, les smartphones pliables représentent désormais 25% des ventes premium. Samsung, Google et Apple proposent chacun leur vision de l''écran flexible. Les prix ont chuté, rendant cette technologie accessible au grand public. Nous avons testé les derniers modèles pour vous proposer un comparatif complet.',
- 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9',
- 1, 2),
+(3, 'real madrid la quete d un nouveau sacre', 'le club madrilène aborde la phase finale de la ligue des champions avec de grandes ambitions porté par un collectif huilé et des individualités capables de basculer la rencontre.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. ut luctus ex sed accumsan consequat. proin feugiat elit ac metus congue sit amet luctus eros molestie. sed tristique mi non neque tristique imperdiet. donec tempor finibus ante nec tempus. nulla rhoncus sem vitae purus efficitur aliquet. aenean vel lectus pellentesque tellus vulputate finibus. sed elementum nisl a sem interdum bibendum. fusce imperdiet leo ut turpis egestas ac convallis felis semper. nam eu feugiat justo.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. ut dictum urna tellus vel feugiat ante scelerisque interdum. donec congue arcu a felis facilisis ac tristique ante condimentum. cras ut diam in neque posuere condimentum. pellentesque id lorem sollicitudin ex rutrum tempor interdum ut lorem. integer in eros sed nisl ultrices finibus. donec scelerisque libero tellus vitae facilisis tortor tincidunt et. curabitur nisl sem bibendum quis tellus at finibus tristique sapien.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. morbi efficitur accumsan dui sed pretium. ut pretium leo non purus vehicula rhoncus. integer pellentesque iaculis turpis id condimentum. nam feugiat mollis nisl feugiat viverra. donec scelerisque tincidunt iaculis. curabitur non mi quis ipsum facilisis mattis sit amet quis felis. dynamic sit amet sapien quis urna luctus convallis id sed mi. sed ac tellus ut nunc tristique viverra elementum ut leo.', 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55', true, 2, 1),
 
-('Découverte d''eau liquide sur Europe, lune de Jupiter',
- 'La sonde Europa Clipper confirme la présence d''un océan sous-glaciaire.',
- 'La NASA a annoncé une découverte majeure : les données de la sonde Europa Clipper confirment la présence d''un vaste océan d''eau liquide sous la croûte glacée d''Europe. Cette découverte relance le débat sur la possibilité de vie extraterrestre dans notre système solaire. Les scientifiques prévoient déjà de nouvelles missions pour explorer cet environnement unique.',
- 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa',
- 2, 3),
+(4, 'le choc manchester city bayern tient ses promesses', 'les deux géants européens se sont quittés sur un score de parité après un match d une intensité folle tactiquement parfait et riche en rebondissements pour les supporters.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. donec nec justo sed velit pretium placerat vitae at purus. quisque tincidunt lectus at lectus laoreet gravida. sed scelerisque mi ligula id porttitor ipsum faucibus et. etiam id ligula tortor. suspendisse potenti. morbi a vulputate massa. integer quis interdum erat sed maximus magna suspendisse tristique accumsan elit ut. aliquam elementum interdum ipsum id iaculis.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. duis iaculis sollicitudin turpis at sodales. nullam non risus eget elit molestie feugiat. integer ut lacus in turpis consectetur convallis nec a leo. curabitur at urna lorem. morbi porta nisl id nunc pretium finibus. pellentesque placerat erat vel accumsan ultrices. sed eu lorem ex. donec eu leo at nisl sollicitudin consequat ac sed sem. phasellus interdum sapien sed tortor porta rhoncus.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. ut scelerisque elit magna vitae placerat lorem molestie vitae. donec sit amet felis arcu. duis facilisis diam nulla eu consequat felis iaculis eu. integer ut eros lectus. ut rhoncus lectus at nibh maximus tincidunt. phasellus aliquet tellus ac lectus elementum non sollicitudin libero elementum. duis condimentum purus sapien id scelerisque metus cursus eu. sed a nunc facilisis purus suscipit varius eu elementum nibh.', 'https://images.unsplash.com/photo-1543351611-58f69d7c1781', true, 2, 2),
 
-('La fusion nucléaire franchit un cap historique',
- 'Un réacteur expérimental produit plus d''énergie qu''il n''en consomme pendant 10 minutes.',
- 'Le réacteur ITER a réussi à maintenir une réaction de fusion nucléaire nette positive pendant dix minutes consécutives, un record absolu. Cette avancée ouvre la voie à une source d''énergie propre et quasi illimitée. Les chercheurs estiment qu''un prototype commercial pourrait voir le jour d''ici 2035.',
- 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb',
- 2, 4),
+(5, 'un prodige bresilien en route pour l europe', 'les plus grands clubs du continent s arrachent la nouvelle pépite de santos dont le transfert record devrait être officialisé dans les toutes prochaines heures du marché.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. cras varius tristique velit id feugiat. proin nec finibus elit. donec nec justo sed velit pretium placerat vitae at purus. quisque tincidunt lectus at lectus laoreet gravida. sed scelerisque mi ligula id porttitor ipsum faucibus et. etiam id ligula tortor. suspendisse potenti. morbi a vulputate massa. integer quis interdum erat sed maximus magna suspendisse tristique accumsan elit ut.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. duis iaculis sollicitudin turpis at sodales. nullam non risus eget elit molestie feugiat. integer ut lacus in turpis consectetur convallis nec a leo. curabitur at urna lorem. morbi porta nisl id nunc pretium finibus. pellentesque placerat erat vel accumsan ultrices. sed eu lorem ex. donec eu leo at nisl sollicitudin consequat ac sed sem. phasellus interdum sapien sed tortor porta rhoncus.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. fusce vulputate tortor finibus eleifend egestas. class aptent taciti sociosqu ad litora torquent per conubia nostra per inceptos himenaeos. dynamic nisl diam eget est pellentesque hendrerit. phasellus sed justo est. cras tempor finibus elementum. proin vel finibus massa. donec efficitur eget ante vitae varius. nullam ac mollis lectus. maecenas feugiat hendrerit nisi sit amet vestibulum ex eleifend id.', 'https://images.unsplash.com/photo-1560272564-c83b66b1ad12', true, 3, 2),
 
-('Festival de Cannes 2026 : les films à ne pas manquer',
- 'Notre sélection des œuvres les plus attendues de la compétition officielle.',
- 'Le 79e Festival de Cannes promet une édition exceptionnelle avec des réalisateurs de renom et de nouveaux talents. Notre critique cinéma a analysé les bandes-annonces et les premières projections pour vous proposer un guide complet. De la Palme d''Or aux sections parallèles, voici les films qui feront parler d''eux cet été.',
- 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba',
- 3, 5),
+(6, 'revolution de palais au barca cet ete', 'la direction barcelonaise prépare un dégraissage massif de son effectif afin de libérer de la masse salariale et de recruter deux joueurs majeurs ciblés de longue date.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. suspendisse iaculis tincidunt lorem quis ultrices. nulla facilisi. morbi sed arcu nec ante molestie tempor. curabitur pretium ex vitae mi tempus imperdiet. aliquam elementum interdum ipsum id iaculis. donec interdum accumsan risus nec commodo. vestibulum nec nulla sed diam viverra dictum in pulvinar libero. curabitur molestie leo nec erat pretium semper. proin at justo at risus viverra finibus ac sit amet sem.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. nulla ac diam accumsan ligula tempor cursus ac eget ex. nam ut ante non arcu congue laoreet non id magna. morbi porta eleifend dictum. aliquam rhoncus ex sapien ut convallis arcu facilisis sed. integer ac tempor sem. sed fringilla tempor sem non finibus. nulla sit amet nulla elit. integer imperdiet id libero ut fringilla. etiam rhoncus sapien ipsum vitae feugiat felis viverra ut.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. ut scelerisque elit magna vitae placerat lorem molestie vitae. donec sit amet felis arcu. duis facilisis diam nulla eu consequat felis iaculis eu. integer ut eros lectus. ut rhoncus lectus at nibh maximus tincidunt. phasellus aliquet tellus ac lectus elementum non sollicitudin libero elementum. duis condimentum purus sapien id scelerisque metus cursus eu. sed a nunc facilisis purus suscipit varius eu elementum nibh.', 'https://images.unsplash.com/photo-1518063319789-7217e6706b04', true, 3, 1),
 
-('Le renouveau de la bande dessinée francophone',
- 'Comment les auteurs franco-belges réinventent le 9e art.',
- 'La bande dessinée francophone vit un âge d''or créatif. De nouveaux formats, des thématiques audacieuses et une ouverture internationale attirent un public toujours plus large. Nous avons rencontré cinq auteurs qui repoussent les limites du genre et explorent des territoires narratifs inédits.',
- 'https://images.unsplash.com/photo-1601645191163-3fc0d5d64e35',
- 3, 6),
+(7, 'lens renforce sa defense avec un international', 'les sang et or ont bouclé l arrivée d un défenseur central d expérience pour pallier les blessures et aborder sereinement la deuxième partie de saison reguliere.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. ut luctus ex sed accumsan consequat. proin feugiat elit ac metus congue sit amet luctus eros molestie. sed tristique mi non neque tristique imperdiet. donec tempor finibus ante nec tempus. nulla rhoncus sem vitae purus efficitur aliquet. aenean vel lectus pellentesque tellus vulputate finibus. sed elementum nisl a sem interdum bibendum. fusce imperdiet leo ut turpis egestas ac convallis felis semper. nam eu feugiat justo.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. ut dictum urna tellus vel feugiat ante scelerisque interdum. donec congue arcu a felis facilisis ac tristique ante condimentum. cras ut diam in neque posuere condimentum. pellentesque id lorem sollicitudin ex rutrum tempor interdum ut lorem. integer in eros sed nisl ultrices finibus. donec scelerisque libero tellus vitae facilisis tortor tincidunt et. curabitur nisl sem bibendum quis tellus at finibus tristique sapien.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. morbi efficitur accumsan dui sed pretium. ut pretium leo non purus vehicula rhoncus. integer pellentesque iaculis turpis id condimentum. nam feugiat mollis nisl feugiat viverra. donec scelerisque tincidunt iaculis. curabitur non mi quis ipsum facilisis mattis sit amet quis felis. dynamic sit amet sapien quis urna luctus convallis id sed mi. sed ac tellus ut nunc tristique viverra elementum ut leo.', 'https://images.unsplash.com/photo-1489945052260-4f21c52268b9', true, 1, 2),
 
-('Coupe du Monde 2026 : les favoris et les surprises',
- 'Analyse tactique des équipes qualifiées pour le Mondial nord-américain.',
- 'La Coupe du Monde 2026, organisée conjointement par les États-Unis, le Canada et le Mexique, s''annonce historique avec 48 équipes qualifiées. Notre analyste sportif décrypte les forces en présence, les tactiques innovantes et les joueurs à surveiller. Le Brésil, la France et l''Argentine partent favoris, mais des outsiders pourraient créer la surprise.',
- 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d',
- 4, 7),
-
-('Le Tour de France 2026 : un parcours de montagne inédit',
- 'Présentation des étapes clés de la Grande Boucle.',
- 'Le parcours du Tour de France 2026 fait la part belle aux cols alpins et pyrénéens avec pas moins de huit arrivées en altitude. Les grimpeurs seront à la fête sur ce tracé exigeant qui promet des batailles épiques. Tadej Pogačar tentera de décrocher un quatrième titre consécutif face à une concurrence relevée.',
- 'https://images.unsplash.com/photo-1517649763962-0c623066013b',
- 4, 8),
-
-('Les cryptomonnaies face à la régulation européenne',
- 'Le règlement MiCA entre en vigueur : quelles conséquences pour les investisseurs ?',
- 'L''Union européenne applique désormais pleinement le règlement MiCA (Markets in Crypto-Assets). Les plateformes d''échange doivent se conformer à des exigences strictes de transparence et de protection des investisseurs. Cet article analyse les impacts sur le marché, les opportunités pour les acteurs régulés et les risques pour les projets non conformes.',
- 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0',
- 5, 1),
-
-('Télétravail : les entreprises françaises entre retour au bureau et flexibilité',
- 'Enquête sur les nouvelles organisations du travail en 2026.',
- 'Trois ans après la généralisation du télétravail, les entreprises françaises adoptent des modèles hybrides variés. Certaines imposent un retour au bureau à temps plein, d''autres misent sur la flexibilité totale. Notre enquête auprès de 500 entreprises révèle les tendances, les avantages et les défis de chaque approche.',
- 'https://images.unsplash.com/photo-1522071820081-009f0129c71c',
- 5, 2),
-
-('Les bienfaits insoupçonnés de la marche quotidienne',
- '30 minutes de marche par jour : des effets prouvés sur le corps et l''esprit.',
- 'Une méta-analyse portant sur 50 000 participants confirme les bienfaits exceptionnels de la marche quotidienne. Réduction des risques cardiovasculaires, amélioration de la santé mentale, renforcement du système immunitaire : les effets sont multiples et significatifs. Nous détaillons les résultats et proposons un programme progressif adapté à tous les âges.',
- 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8',
- 6, 3),
-
-('Nutrition : le retour en grâce des légumineuses',
- 'Pourquoi les lentilles, pois chiches et haricots sont les aliments de demain.',
- 'Riches en protéines, en fibres et en minéraux, les légumineuses s''imposent comme un pilier de l''alimentation durable. Les chefs étoilés les mettent à l''honneur, l''industrie agroalimentaire développe de nouveaux produits à base de légumineuses, et les nutritionnistes les recommandent pour une alimentation équilibrée. Tour d''horizon d''un phénomène culinaire et nutritionnel.',
- 'https://images.unsplash.com/photo-1515543904413-63b3b7a4e073',
- 6, 4),
-
-('Les Açores : le secret le mieux gardé de l''Atlantique',
- 'Guide complet pour découvrir cet archipel portugais préservé du tourisme de masse.',
- 'Situées en plein Atlantique, les Açores offrent des paysages à couper le souffle : volcans, lacs de cratère, forêts luxuriantes et côtes sauvages. Encore épargnées par le tourisme de masse, ces îles portugaises séduisent les voyageurs en quête d''authenticité. Notre guide pratique couvre les neuf îles, avec les meilleures randonnées, restaurants et hébergements.',
- 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b',
- 7, 5),
-
-('Japon hors des sentiers battus : 5 régions méconnues',
- 'Au-delà de Tokyo et Kyoto, découvrez un Japon authentique et surprenant.',
- 'Le Japon ne se résume pas à Tokyo et Kyoto. De la péninsule de Noto aux montagnes de Shikoku, en passant par les villages historiques de Tohoku, le pays regorge de trésors cachés. Nous avons exploré cinq régions méconnues pour vous offrir un voyage au cœur du Japon traditionnel, loin de la foule.',
- 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e',
- 7, 6),
-
-('La pâtisserie française se réinvente',
- 'Moins de sucre, plus de créativité : les nouvelles tendances sucrées.',
- 'La pâtisserie française évolue sous l''impulsion d''une nouvelle génération de chefs. Réduction du sucre, utilisation de farines alternatives, intégration de légumes et d''épices : les créations sont plus audacieuses et plus saines que jamais. Nous avons visité cinq pâtisseries parisiennes qui incarnent cette révolution gustative.',
- 'https://images.unsplash.com/photo-1488477181946-6428a0291777',
- 8, 7),
-
-('Vins naturels : guide pour les débutants',
- 'Comprendre et apprécier les vins sans intrants chimiques.',
- 'Les vins naturels séduisent de plus en plus d''amateurs, mais leur diversité peut dérouter les néophytes. Qu''est-ce qu''un vin naturel exactement ? Comment le choisir ? Avec quels plats l''accorder ? Notre sommelier répond à toutes vos questions et vous propose une sélection de dix bouteilles accessibles pour découvrir cet univers passionnant.',
- 'https://images.unsplash.com/photo-1474722883778-792e7990302f',
- 8, 8);
+(8, 'la juventus cherche un second souffle au milieu', 'le club de turin multiplie les pistes pour dénicher un milieu créatif capable de redynamiser le jeu offensif de l équipe en perte de vitesse en championnat.', 'lorem ipsum dolor sit amet consectetur adipiscing elit. donec nec justo sed velit pretium placerat vitae at purus. quisque tincidunt lectus at lectus laoreet gravida. sed scelerisque mi ligula id porttitor ipsum faucibus et. etiam id ligula tortor. suspendisse potenti. morbi a vulputate massa. integer quis interdum erat sed maximus magna suspendisse tristique accumsan elit ut. aliquam elementum interdum ipsum id iaculis.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. duis iaculis sollicitudin turpis at sodales. nullam non risus eget elit molestie feugiat. integer ut lacus in turpis consectetur convallis nec a leo. curabitur at urna lorem. morbi porta nisl id nunc pretium finibus. pellentesque placerat erat vel accumsan ultrices. sed eu lorem ex. donec eu leo at nisl sollicitudin consequat ac sed sem. phasellus interdum sapien sed tortor porta rhoncus.\n\nlorem ipsum dolor sit amet consectetur adipiscing elit. ut scelerisque elit magna vitae placerat lorem molestie vitae. donec sit amet felis arcu. duis facilisis diam nulla eu consequat felis iaculis eu. integer ut eros lectus. ut rhoncus lectus at nibh maximus tincidunt. phasellus aliquet tellus ac lectus elementum non sollicitudin libero elementum. duis condimentum purus sapien id scelerisque metus cursus eu. sed a nunc facilisis purus suscipit varius eu elementum nibh.', 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af', true, 3, 2);
